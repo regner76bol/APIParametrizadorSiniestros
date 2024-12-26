@@ -40,29 +40,57 @@ public class ConsecuenciasBusiness implements ConsecuenciasBusinessInterface {
     public ConsecuenciasResponse CrearConsecuencia(ConsecuenciasRequest request){
         ConsecuenciasResponse response = IBuscarConsecuencia.Execute(request);
         if (response.getOp_ConsxCia() == 0) {
-            ICrearConsCia.execute(request);
-            response.setOp_Resultado(BigDecimal.valueOf(0));
-            response.setOp_MSG("se ha creado la consecuencia x compañía");
+            response =  ICrearConsCia.execute(request);
+            if (response.getOp_Resultado().equals(BigDecimal.valueOf(0)))
+            {
+                response.setOp_Resultado(BigDecimal.valueOf(0));
+                response.setOp_MSG("se ha creado la consecuencia por compañia");
+            }
+            else{
+                response.setOp_Resultado(BigDecimal.valueOf(-1));
+                response.setOp_Resultado(response.getOp_Resultado());
+            }
+
         } else {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
             response.setOp_MSG("la Consecuencia x compañía ya existe");
         }
 
+
         if (response.getOp_ConsxSecc()==0) {
-            ICrearConsSecc.execute(request);
-            response.setOp_MSG("se ha creado la consecuencia x sección");
+            response = ICrearConsSecc.execute(request);
+            if (response.getOp_Resultado().equals(BigDecimal.valueOf(0))){
+
+                response.setOp_Resultado(BigDecimal.valueOf(0));
+                response.setOp_MSG("se ha creado la consecuencia por sección");
+            }
+            else{
+                response.setOp_Resultado(BigDecimal.valueOf(-1));
+                response.setOp_MSG(response.getOp_MSG());
+            }
         } else {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
             response.setOp_MSG("la Consecuencia x sección ya existe");
+
         }
 
+
         if (response.getOp_ConsxProd()==0) {
-            ICrearConsProd.execute(request);
-            response.setOp_MSG("se ha creado la consecuencia x producto");
+            response = ICrearConsProd.execute(request);
+            if (response.getOp_Resultado().equals(BigDecimal.valueOf(0))){
+                response.setOp_Resultado(BigDecimal.valueOf(0));
+                response.setOp_MSG("se ha creado la consecuencia");
+            }
+            else {
+                response.setOp_Resultado(BigDecimal.valueOf(-1));
+                response.setOp_MSG(response.getOp_MSG());
+            }
+
         } else {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
             response.setOp_MSG("la Consecuencia x producto ya existe");
         }
+
         return response;
     }
 }

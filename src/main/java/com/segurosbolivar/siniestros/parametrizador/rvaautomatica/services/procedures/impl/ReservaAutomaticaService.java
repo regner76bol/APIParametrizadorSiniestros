@@ -4,6 +4,7 @@ import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.entity.DAO.Res
 import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.entity.DTO.ReservaAutomaticaResponse;
 import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.services.procedures.ReservaAutomaticaServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,8 @@ public class ReservaAutomaticaService extends StoredProcedure implements Reserva
         declareParameter(new SqlParameter("ip_liq_automatica", Types.VARCHAR));
         declareParameter(new SqlParameter("ip_idparammae", Types.INTEGER));
         declareParameter(new SqlParameter("ip_simulacion", Types.INTEGER));
+        declareParameter(new SqlOutParameter("Op_Resultado", Types.NUMERIC));
+        declareParameter(new SqlOutParameter("Op_MSG", Types.VARCHAR));
 
     }
 
@@ -46,30 +49,29 @@ public class ReservaAutomaticaService extends StoredProcedure implements Reserva
         String Op_Msg;
         try {
             Map in = new HashMap<String,Object>();
-            in.put("ip_cod_cia",Types.INTEGER);
-            in.put("ip_cod_secc",Types.INTEGER);
-            in.put("ip_cod_producto",Types.INTEGER);
-            in.put("ip_cod_cob",Types.INTEGER);
-            in.put("ip_cod_causa",Types.INTEGER);
-            in.put("ip_cod_cons",Types.INTEGER);
-            in.put("ip_tipo_exped",Types.INTEGER);
-            in.put("ip_cod_concep_rva",Types.INTEGER);
-            in.put("ip_id_tipo_rva",Types.INTEGER);
-            in.put("ip_dato_variable",Types.INTEGER);
-            in.put("ip_liq_automatica",Types.INTEGER);
-            in.put("ip_idparammae",Types.INTEGER);
-            in.put("ip_simulacion",Types.INTEGER);
+            in.put("ip_cod_cia",request.getCodCia());
+            in.put("ip_cod_secc",request.getCodSecc());
+            in.put("ip_cod_producto",request.getCodProd());
+            in.put("ip_cod_cob",request.getCodCob());
+            in.put("ip_cod_causa",request.getCodCausa());
+            in.put("ip_cod_cons",request.getCodConsecuencia());
+            in.put("ip_tipo_exped",request.getTipoExped());
+            in.put("ip_cod_concep_rva",request.getConcepRva());
+            in.put("ip_id_tipo_rva",request.getTipoRva());
+            in.put("ip_dato_variable",request.getDatoVariable());
+            in.put("ip_liq_automatica",request.getLiquidacionAutomatica());
+            in.put("ip_idparammae",request.getIdParamMae());
+            in.put("ip_simulacion",request.getSimulacion());
 
             Map out = this.execute(in);
 
-            response.setOp_Resultado(BigDecimal.valueOf(0));
-            response.setOp_MSG("Ok");
+            response.setOp_Resultado((BigDecimal)out.get("Op_Resultado"));
+            response.setOp_MSG(out.get("Op_MSG").toString());
 
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
             response.setOp_MSG(e.getCause().getMessage());
         }
-
         return response;
     }
 }

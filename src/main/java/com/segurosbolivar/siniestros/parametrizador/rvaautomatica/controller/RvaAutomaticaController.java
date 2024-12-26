@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.entity.DAO.ReservaAutomaticaRequest;
 import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.entity.DTO.ReservaAutomaticaResponse;
 import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.services.business.ReservaAutomaticaBusinessInterface;
+import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.services.procedures.EditarRvaAutomaticaServiceInterface;
 import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.services.procedures.ListarReservasServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,9 @@ public class RvaAutomaticaController {
 
     @Autowired
     ListarReservasServiceInterface IListar;
+
+    @Autowired
+    EditarRvaAutomaticaServiceInterface IEditar;
 
 
 
@@ -48,7 +52,7 @@ public class RvaAutomaticaController {
             rva.setOp_MSG(e.getCause().getMessage());
             response = new ResponseEntity<>(rva,HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(rva, HttpStatus.OK);
+        return response;
     }
     @PostMapping("/parametrizador/rvaautomatica/crear")
     public ResponseEntity<ReservaAutomaticaResponse> CrearRvaAutomatica(@RequestBody ReservaAutomaticaRequest request)throws JsonProcessingException {
@@ -71,8 +75,31 @@ public class RvaAutomaticaController {
             rva.setOp_MSG(e.getCause().getMessage());
             response = new ResponseEntity<>(rva,HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return response;
+    }
 
 
-        return new ResponseEntity<>(rva, HttpStatus.OK);
+    @PostMapping("/parametrizador/rvaautomatica/editar")
+    public ResponseEntity<ReservaAutomaticaResponse> EditarRvaAutomatica(@RequestBody ReservaAutomaticaRequest request)throws JsonProcessingException {
+        ResponseEntity<ReservaAutomaticaResponse> response= null;
+        ReservaAutomaticaResponse rva = new ReservaAutomaticaResponse();
+
+        try {
+            rva = IEditar.EditarRvaAutomatica(request);
+            if (rva.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
+                response= new ResponseEntity<>(rva,HttpStatus.OK);
+            } else if (rva.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
+                response= new ResponseEntity<>(rva,HttpStatus.OK);
+            }
+            else{
+                response= new ResponseEntity<>(rva,HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        } catch (Exception e) {
+            rva.setOp_Resultado(BigDecimal.valueOf(-1));
+            rva.setOp_MSG(e.getCause().getMessage());
+            response = new ResponseEntity<>(rva,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return response;
     }
 }

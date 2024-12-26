@@ -5,6 +5,7 @@ import com.segurosbolivar.siniestros.parametrizador.consecuecias.entity.DAO.Cons
 import com.segurosbolivar.siniestros.parametrizador.consecuecias.entity.DTO.ConsecuenciasResponse;
 import com.segurosbolivar.siniestros.parametrizador.consecuecias.services.procedures.CrearConsecuenciaCiaServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,8 @@ DataSource dataSource;
       declareParameter(new SqlParameter("ip_consecuencia", Types.VARCHAR));
       declareParameter(new SqlParameter("ip_idparammae", Types.INTEGER));
       declareParameter(new SqlParameter("ip_simulacion", Types.INTEGER));
+      declareParameter(new SqlOutParameter("Op_Resultado",Types.NUMERIC));
+      declareParameter(new SqlOutParameter("Op_MSG",Types.VARCHAR));
   }
 
   public ConsecuenciasResponse execute(ConsecuenciasRequest request){
@@ -46,8 +49,8 @@ DataSource dataSource;
 
           Map out = this.execute(in);
 
-          response.setOp_Resultado(BigDecimal.valueOf(0));
-          response.setOp_MSG("Ok");
+          response.setOp_Resultado((BigDecimal) out.get("Op_Resultado"));
+          response.setOp_MSG(out.get("Op_MSG").toString());
 
       } catch (Exception e) {
           response.setOp_Resultado(BigDecimal.valueOf(-1));

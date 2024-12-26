@@ -23,7 +23,7 @@ public class ReservaAutomaticaBusiness implements ReservaAutomaticaBusinessInter
         ReservaAutomaticaResponse response =null;
 
         Integer ExCob = Ifunciones.Fn_ExisteCobertura(request.getCodCia().toString(),request.getCodProd().toString(), request.getCodCob().toString());
-        if (ExCob==0) {
+        if (ExCob==1) {
             Integer ExCau = Ifunciones.Fn_ExisteCausa(request.getCodCia().toString(),request.getCodSecc().toString(), request.getCodProd().toString(),request.getCodCausa().toString());
             if (ExCau==1) {
                 Integer ExCons = Ifunciones.Fn_ExisteConsecuencia(request.getCodCia().toString(),request.getCodSecc().toString(), request.getCodProd().toString(),request.getCodConsecuencia().toString());
@@ -40,7 +40,7 @@ public class ReservaAutomaticaBusiness implements ReservaAutomaticaBusinessInter
                                 }
                                 else {
                                     response.setOp_Resultado(BigDecimal.valueOf(-1));
-                                    response.setOp_MSG("No se pudo crear la Reserva Automática");
+                                    response.setOp_MSG(response.getOp_MSG());
                                 }
                             }
                             else{
