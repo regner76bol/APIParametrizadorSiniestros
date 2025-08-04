@@ -25,7 +25,7 @@ public class EditarCausasSeccServiceImpl extends StoredProcedure implements Edit
         declareParameter(new SqlParameter("ip_codCia", Types.INTEGER));
         declareParameter(new SqlParameter("ip_codSecc", Types.INTEGER));
         declareParameter(new SqlParameter("ip_tipoCausa", Types.INTEGER));
-        declareParameter(new SqlParameter("ip_tipoCausaAnt", Types.INTEGER));
+        //declareParameter(new SqlParameter("ip_tipoCausaAnt", Types.INTEGER));
         declareParameter(new SqlParameter("ip_codCausa", Types.INTEGER));
         declareParameter(new SqlOutParameter("Op_Resultado", Types.NUMERIC));
         declareParameter(new SqlOutParameter("Op_MSG", Types.VARCHAR));
@@ -41,7 +41,7 @@ public class EditarCausasSeccServiceImpl extends StoredProcedure implements Edit
             in.put("ip_codCia",request.getCodCia());
             in.put("ip_codSecc",request.getCodSecc());
             in.put("ip_tipoCausa",request.getTipoCausa());
-            in.put("ip_tipoCausaAnt",request.getTipoCausaAnt());
+            //in.put("ip_tipoCausaAnt",request.getTipoCausaAnt());
             in.put("ip_codCausa",request.getCodCausa());
 
             Map out = this.execute(in);
