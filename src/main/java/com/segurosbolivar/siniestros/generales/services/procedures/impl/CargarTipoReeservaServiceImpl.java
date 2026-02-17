@@ -2,7 +2,7 @@ package com.segurosbolivar.siniestros.generales.services.procedures.impl;
 
 import com.segurosbolivar.siniestros.generales.entity.DTO.GeneralesResponseDTO;
 import com.segurosbolivar.siniestros.generales.services.procedures.CargarTipoReservaServiceInterface;
-import com.sun.xml.internal.ws.developer.Serialization;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.object.StoredProcedure;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Types;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service

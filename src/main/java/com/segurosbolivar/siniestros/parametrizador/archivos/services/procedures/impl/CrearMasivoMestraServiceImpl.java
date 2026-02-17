@@ -10,6 +10,7 @@ import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,20 +35,20 @@ public class CrearMasivoMestraServiceImpl extends StoredProcedure implements Cre
     @Override
     public MasivoMeastraResponse execute(MasivoMaestraRequest request){
         Integer Op_SecMae=0;
-        Integer Op_Resultado = 0;
+        BigDecimal Op_Resultado;
         String Op_MSG = "";
         MasivoMeastraResponse response = new MasivoMeastraResponse();
         try {
-            Map In = new HashMap<String, Object>();
+            Map<String, Object> In = new HashMap<>();
             In.put("ip_codCia", request.getCodCia());
             In.put("ip_codSecc", request.getCodSecc());
             In.put("ip_codProducto", request.getCodProd());
             In.put("ip_codAgrupacion", request.getCodAgrupacion());
             In.put("ip_idArchivo", request.getIdArchivo());
 
-            Map Out = this.execute(In);
+            Map<String, Object> Out = this.execute(In);
             Op_SecMae = (Integer) Out.get("Op_SecMae");
-            Op_Resultado = (Integer) Out.get("Op_Resultado");
+            Op_Resultado = (BigDecimal) Out.get("Op_Resultado");
             Op_MSG = Out.get("Op_MSG").toString();
 
             response.setOp_SecMae(Op_SecMae);
@@ -55,8 +56,8 @@ public class CrearMasivoMestraServiceImpl extends StoredProcedure implements Cre
             response.setOp_MSG(Op_MSG);
         }
         catch (Exception e){
-            response.setOp_Resultado(-1);
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_Resultado(BigDecimal.valueOf(-1));
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

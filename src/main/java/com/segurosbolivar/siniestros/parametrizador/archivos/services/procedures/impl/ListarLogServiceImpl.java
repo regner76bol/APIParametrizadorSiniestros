@@ -40,13 +40,13 @@ public class ListarLogServiceImpl extends StoredProcedure implements ListarLogSe
         ListarLogResponse response= new ListarLogResponse();
 
         try {
-            Map in = new HashMap<String,Object>();
+            Map<String, Object> in = new HashMap<>();
             in.put("ip_codCia",request.getCodCia());
             in.put("ip_codSecc",request.getCodSecc());
             in.put("ip_codProd",request.getCodProd());
             in.put("ip_idParamMae",request.getIdParamMae());
 
-            Map out = this.execute(in);
+            Map<String, Object> out = this.execute(in);
 
              Op_CurLog = out.get("Op_CurLog");
              Op_Resultado = (BigDecimal) out.get("Op_Resultado");
@@ -59,7 +59,7 @@ public class ListarLogServiceImpl extends StoredProcedure implements ListarLogSe
 
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

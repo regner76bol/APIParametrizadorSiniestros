@@ -1,8 +1,9 @@
 package com.segurosbolivar.siniestros.parametrizador.archivos.services.procedures.impl;
 
-import com.segurosbolivar.siniestros.parametrizador.archivos.services.procedures.CrearArchivosServiceInterface;
+import com.segurosbolivar.siniestros.commons.ResponseBase;
 import com.segurosbolivar.siniestros.parametrizador.archivos.entity.DAO.ArchivosRequest;
 import com.segurosbolivar.siniestros.parametrizador.archivos.entity.DTO.ArchivosResponse;
+import com.segurosbolivar.siniestros.parametrizador.archivos.services.procedures.InsertarArchivosServiceImplInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
@@ -16,12 +17,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class PrcCrearArchivoServiceImpl extends StoredProcedure implements CrearArchivosServiceInterface {
+public class InsertarArchivoServiceImpl extends StoredProcedure implements InsertarArchivosServiceImplInterface {
+
     @Autowired
     DataSource dataSource;
 
-    public PrcCrearArchivoServiceImpl(DataSource dataSource) {
-        super(dataSource, "PKG_PARAMETROS_SINIESTRO.Proc_CrearArchivo");
+    public InsertarArchivoServiceImpl(DataSource dataSource){
+        super(dataSource,"PKG_PARAMETROS_SINIESTRO.Proc_CrearArchivo");
         declareParameter(new SqlParameter("ip_codCia", Types.NUMERIC));
         declareParameter(new SqlParameter("ip_codSecc", Types.NUMERIC));
         declareParameter(new SqlParameter("ip_codProducto", Types.NUMERIC));
@@ -33,31 +35,31 @@ public class PrcCrearArchivoServiceImpl extends StoredProcedure implements Crear
     }
 
     @Override
-    public ArchivosResponse execute(ArchivosRequest request) {
-        BigDecimal Op_Resultado;
-        String Op_MSG;
-        ArchivosResponse response = new ArchivosResponse();
+    public ResponseBase InsertarArchivo(ArchivosRequest request){
+
+        ResponseBase response = new ResponseBase();
+
         try {
-            Map<String, Object> In = new HashMap<>();
-            In.put("ip_codCia", request.getCodCia());
-            In.put("ip_codSecc", request.getCodSecc());
-            In.put("ip_codProducto", request.getCodProd());
-            In.put("ip_nombreArchivo", request.getNombreArchivo());
-            In.put("ip_rutaFisica", request.getRutaFisica());
-            In.put("ip_tipo", request.getTipo());
+            Map<String, Object> in = new HashMap<>();
+            in.put("ip_codCia", request);
+            in.put("ip_codSecc", request);
+            in.put("ip_codProducto", request);
+            in.put("ip_nombreArchivo", request);
+            in.put("ip_rutaFisica", request);
+            in.put("ip_tipo", request);
 
-            Map<String, Object> Out = this.execute(In);
-            Op_Resultado = (BigDecimal) Out.get("Op_Resultado");
-            Op_MSG = Out.get("Op_MSG").toString();
+            Map<String, Object> out = this.execute(in);
 
-            response.setOp_Resultado(Op_Resultado);
-            response.setOp_MSG(Op_MSG);
+            response.setOp_Resultado((BigDecimal) out.get("Op_Resultado"));
+            response.setOp_MSG(out.get("Op_MSG").toString());
 
-        } catch (Exception e) {
+        }
+        catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
             response.setOp_MSG(e.getMessage());
         }
         return response;
     }
+
 
 }

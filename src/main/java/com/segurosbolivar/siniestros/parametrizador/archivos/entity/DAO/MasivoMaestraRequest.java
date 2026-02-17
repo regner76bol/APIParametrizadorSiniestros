@@ -4,7 +4,6 @@ import com.segurosbolivar.siniestros.commons.RequestBase;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 public class MasivoMaestraRequest extends RequestBase {

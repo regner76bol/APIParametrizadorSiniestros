@@ -1,21 +1,18 @@
 package com.segurosbolivar.siniestros.parametrizador.archivos.entity.DTO;
 
-import lombok.Builder;
+import com.segurosbolivar.siniestros.commons.ResponseBase;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@Builder
 @Data
 @NoArgsConstructor
-public class ListarLogResponse {
-    public ListarLogResponse(Object Op_curLog, BigDecimal Op_Resultado, String Op_MSG){
+public class ListarLogResponse extends ResponseBase {
+    public ListarLogResponse(Object Op_curLog){
         this.Op_curLog=Op_curLog;
-        this.Op_Resultado = Op_Resultado;
-        this.Op_MSG = Op_MSG;
+
     }
     private Object Op_curLog;
-    private BigDecimal Op_Resultado;
-    private String Op_MSG;
+
 }

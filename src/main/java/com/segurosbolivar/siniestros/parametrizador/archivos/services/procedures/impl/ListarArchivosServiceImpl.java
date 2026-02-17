@@ -29,11 +29,11 @@ public class ListarArchivosServiceImpl extends StoredProcedure implements Listar
     public ListarArchivosResponse execute(){
       Object Op_curArchivos;
       BigDecimal Op_Resultado;
-      String Op_MSG="";
+      String Op_MSG;
       ListarArchivosResponse lista = new ListarArchivosResponse();
       try {
-          Map In = new HashMap<String, Object>();
-          Map Out = this.execute(In);
+          Map<String, Object> In = new HashMap<>();
+          Map<String, Object> Out = this.execute(In);
 
           Op_curArchivos = Out.get("Op_curArchivos");
           Op_Resultado = (BigDecimal) Out.get("Op_Resultado");

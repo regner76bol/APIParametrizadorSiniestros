@@ -1,26 +1,38 @@
 package com.segurosbolivar.siniestros.parametrizador.archivos.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.segurosbolivar.siniestros.commons.RequestBase;
 import com.segurosbolivar.siniestros.commons.ResponseBase;
 import com.segurosbolivar.siniestros.parametrizador.archivos.entity.DAO.*;
 import com.segurosbolivar.siniestros.parametrizador.archivos.entity.DTO.*;
+import com.segurosbolivar.siniestros.parametrizador.archivos.services.bussines.ArchivosBussinesInterface;
 import com.segurosbolivar.siniestros.parametrizador.archivos.services.procedures.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.segurosbolivar.siniestros.config.Utilities.*;
-
+import com.segurosbolivar.siniestros.funciones.funcionesInterface;
 
 import java.math.BigDecimal;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @RestController
-//@RequestMapping(value = "archivos")
 @CrossOrigin(origins = "*")
 public class ArchivosController {
+
+    @Value("${file.upload.dir}")
+    private final Path filePath = Paths.get("${file.upload.dir}");
 
     @Autowired
     private ListarArchivosServiceInterface archivosInterface;
@@ -30,31 +42,24 @@ public class ArchivosController {
 
     @Autowired
     private  ListarLogServiceInterface logInterface;
-@Autowired
-    private CrearArchivosServiceInterface interfaz;
 
-@Autowired
-private CrearMasivoMaestraServiceInterface masivoInterface;
+    @Autowired
+    private ArchivosBussinesInterface IArchivosBussines;
 
-@Autowired
-private ActualizarMasivoServiceInterface ActMasivoInterface;
-
-@Autowired
-private ParametrizarSiniestrosServiceInterface IParametrizar;
 
 @GetMapping("/parametrizador/archivos/lista")
-public ResponseEntity<ListarArchivosResponse> getListarArchivos(@RequestBody RequestBase request) throws Exception {
+public ResponseEntity<ListarArchivosResponse> getListarArchivos()  {
 
     ResponseEntity<ListarArchivosResponse> response = null;
 
     try {
         ListarArchivosResponse archivos = archivosInterface.execute();
-        if (archivos.getOp_Resultado() == BigDecimal.valueOf(0)) {
-            response = new ResponseEntity<ListarArchivosResponse>(archivos, HttpStatus.OK);
-        } else if (archivos.getOp_Resultado() == BigDecimal.valueOf(-1)) {
-            response = new ResponseEntity<ListarArchivosResponse>(archivos, HttpStatus.OK);
+        if (archivos.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
+            response = new ResponseEntity<>(archivos, HttpStatus.OK);
+        } else if (archivos.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
+            response = new ResponseEntity<>(archivos, HttpStatus.OK);
         } else {
-            response = new ResponseEntity<ListarArchivosResponse>(archivos, HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity<>(archivos, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     } catch (Exception e) {
         ListarArchivosResponse lista = new ListarArchivosResponse();
@@ -65,110 +70,81 @@ public ResponseEntity<ListarArchivosResponse> getListarArchivos(@RequestBody Req
     return response;
 }
 
-@GetMapping(value = "/parametrizador/archivos/ccambio")
-public ResponseEntity<CcambioResponse> ListarCCambio(@RequestBody CcambioRequest request) throws JsonProcessingException {
- ResponseEntity<CcambioResponse> response = null;
+@PostMapping(value = "/parametrizador/archivos/ccambio")
+public ResponseEntity<CcambioResponse> ListarCCambio(@RequestBody CcambioRequest request) {
+ ResponseEntity<CcambioResponse> response;
  CcambioResponse ccambio = ccambioInterface.excecute(request);
-    if (ccambio.getOp_Resultado()== BigDecimal.valueOf(0)){
-        response=new ResponseEntity<CcambioResponse>(ccambio,HttpStatus.OK);
+    if (ccambio.getOp_Resultado().equals(BigDecimal.valueOf(0))){
+        response=new ResponseEntity<>(ccambio,HttpStatus.OK);
     }
-    else if (ccambio.getOp_Resultado()==BigDecimal.valueOf(-1)){
-        response=new ResponseEntity<CcambioResponse>(ccambio,HttpStatus.OK);
+    else if (ccambio.getOp_Resultado().equals(BigDecimal.valueOf(-1))){
+        response=new ResponseEntity<>(ccambio,HttpStatus.OK);
     }
     else {
-        response=new ResponseEntity<CcambioResponse>(ccambio,HttpStatus.INTERNAL_SERVER_ERROR);
+        response=new ResponseEntity<>(ccambio,HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return response;
 }
 
-@GetMapping("/parametrizador/archivos/log")
-public ResponseEntity<ListarLogResponse> ListarLog(@RequestBody ListarLogRequest request) throws JsonProcessingException{
-    ResponseEntity<ListarLogResponse> response = null;
+@PostMapping("/parametrizador/archivos/log")
+public ResponseEntity<ListarLogResponse> ListarLog(@RequestBody ListarLogRequest request) {
+    ResponseEntity<ListarLogResponse> response;
     ListarLogResponse log = logInterface.execute(request);
     try {
-        if (log.getOp_Resultado()==BigDecimal.valueOf(0)) {
-            response = new ResponseEntity<ListarLogResponse>(log,HttpStatus.OK);
-        } else if (log.getOp_Resultado() == BigDecimal.valueOf(-1)) {
-            response = new ResponseEntity<ListarLogResponse>(log, HttpStatus.OK);
+        if (log.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
+            response = new ResponseEntity<>(log,HttpStatus.OK);
+        } else if (log.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
+            response = new ResponseEntity<>(log, HttpStatus.OK);
         } else {
-            response = new ResponseEntity<ListarLogResponse>(log, HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity<>(log, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     } catch (Exception e) {
         ListarLogResponse res= new ListarLogResponse();
         res.setOp_Resultado(BigDecimal.valueOf(-1));
         res.setOp_MSG(e.getCause().getMessage());
-        response = new ResponseEntity<ListarLogResponse>(res,HttpStatus.INTERNAL_SERVER_ERROR);
+        response = new ResponseEntity<>(res,HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return response;
 }
 
-
-@PostMapping(value = "/parametrizador/archivo/creararchivo")
-    public ResponseEntity<ArchivosResponse> CrearArchivo(@RequestBody ArchivosRequest request){
-        ResponseEntity<ArchivosResponse> response = null;
-        ArchivosResponse archivo = interfaz.execute(request);
-
-        if (archivo.getOp_Resultado()==0){
-            response = new ResponseEntity<ArchivosResponse>(archivo, HttpStatus.OK);
+    @PostMapping(value = "/parametrizador/archivos/cargar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseBase> CargarArchivo(@RequestParam(value = "file", required = false) MultipartFile file,
+                                                      @RequestBody ArchivosRequest request) {
+    ResponseBase res = new ResponseBase();
+    ResponseEntity<ResponseBase> response;
+    System.out.println("hola");
+    try {
+         //Validar que el archivo no sea nulo
+        if (file == null) {
+            res.setOp_MSG("Error: No se recibió ningún archivo. Verifique que el parámetro se llame 'file'");
+            res.setOp_Resultado(BigDecimal.valueOf(-1));
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        else if(archivo.getOp_Resultado()==-1){
-            response = new ResponseEntity<ArchivosResponse>(archivo, HttpStatus.OK);
+         // Validar que el archivo no esté vacío
+        if (file.isEmpty()) {
+            res.setOp_MSG("Error: El archivo está vacío");
+            res.setOp_Resultado(BigDecimal.valueOf(-1));
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        else {
-            response = new ResponseEntity<ArchivosResponse>(archivo, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    return response;
-}
+        
+        // Log para debugging
+        System.out.println("Archivo recibido: " + file.getOriginalFilename());
+        System.out.println("Tamaño: " + file.getSize() + " bytes");
+        System.out.println("Content-Type: " + file.getContentType());
 
-@PostMapping("/parametrizador/masivo/maestra")
-    public ResponseEntity<MasivoMeastraResponse> CrearMaestra(@RequestBody MasivoMaestraRequest request){
-    ResponseEntity<MasivoMeastraResponse> response= null;
-    MasivoMeastraResponse masivo = masivoInterface.execute(request);
-    if (masivo.getOp_Resultado()==0)
-    {
-        response = new ResponseEntity<MasivoMeastraResponse>(masivo,HttpStatus.OK);
+        res = IArchivosBussines.CargarArchivo(filePath,file,request);
+
+        response = new ResponseEntity<>(res, HttpStatus.OK);
+
     }
-    else if (masivo.getOp_Resultado()==-1)
-    {
-        response = new ResponseEntity<MasivoMeastraResponse>(masivo,HttpStatus.OK);
-    }
-    else {
-        response = new ResponseEntity<MasivoMeastraResponse>(masivo,HttpStatus.INTERNAL_SERVER_ERROR);
+    catch (Exception e){
+        //e.printStackTrace(); // Para ver el error completo en consola
+        res.setOp_MSG("Error: "+ e.getMessage() );
+        res.setOp_Resultado(BigDecimal.valueOf(-1));
+        response = new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
     return response;
-}
-
-@PostMapping("/parametrizador/masivo/actualizar")
-    public ResponseEntity<ActualizarMasivoResponse> ActualizarMasivo(@RequestBody ActualizarMasivoRequest request){
-    ResponseEntity<ActualizarMasivoResponse> response= null;
-    ActualizarMasivoResponse ActMasivo = ActMasivoInterface.execute(request);
-    if (ActMasivo.getOp_Resultado()==0){
-        response = new ResponseEntity<ActualizarMasivoResponse>(ActMasivo,HttpStatus.OK);
-    }
-    else if (ActMasivo.getOp_Resultado()==-1){
-        response = new ResponseEntity<ActualizarMasivoResponse>(ActMasivo,HttpStatus.OK);
-    }
-    else {
-        response = new ResponseEntity<ActualizarMasivoResponse>(ActMasivo,HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return response;
-}
-
-@PostMapping("/parametrizador/masivo/parametrizar")
-    public ResponseEntity<ResponseBase> Parametrizar(@RequestBody RequestBase request) throws JsonProcessingException{
-    ResponseEntity<ResponseBase> response = null;
-    ResponseBase par = IParametrizar.execute(request);
-    if (par.getOp_Resultado()==BigDecimal.valueOf(0)){
-        response = new ResponseEntity<ResponseBase>(par,HttpStatus.OK);
-    }
-    else if (par.getOp_Resultado()==BigDecimal.valueOf(-1)){
-        response = new ResponseEntity<ResponseBase>(par,HttpStatus.OK);
-    }
-    else {
-        response = new ResponseEntity<ResponseBase>(par,HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return response;
-}
-
+  }
 }

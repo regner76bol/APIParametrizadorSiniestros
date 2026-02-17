@@ -40,14 +40,14 @@ public class CcambioServiceImpl extends StoredProcedure implements CcambioServic
         Object Op_CurCCambio;
         CcambioResponse response= new CcambioResponse();
         try {
-            Map in = new HashMap<String, Object>();
+            Map<String, Object> in = new HashMap<>();
             in.put("ip_codCia", request.getCodCia());
             in.put("ip_codSecc", request.getCodSecc());
             in.put("ip_codProd", request.getCodProd());
             in.put("ip_idParamMae", request.getIdParamMae());
             in.put("ip_tipo", request.getTipo());
 
-            Map out = this.execute(in);
+            Map<String, Object> out = this.execute(in);
 
             Op_CurCCambio = out.get("Op_CurCCambio");
             Op_Resultado = (BigDecimal) out.get("Op_Resultado");

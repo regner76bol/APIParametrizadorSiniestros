@@ -1,6 +1,5 @@
 package com.segurosbolivar.siniestros.parametrizador.archivos.services.procedures.impl;
 
-import com.segurosbolivar.siniestros.commons.RequestBase;
 import com.segurosbolivar.siniestros.commons.ResponseBase;
 import com.segurosbolivar.siniestros.parametrizador.archivos.services.procedures.ParametrizarSiniestrosServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +28,16 @@ public class ParametrizarSiniestrosService extends StoredProcedure implements Pa
     }
 
     @Override
-    public ResponseBase execute(RequestBase request){
+    public ResponseBase execute(){
         ResponseBase response = new ResponseBase();
         BigDecimal Op_Resultado;
         String Op_MSG;
 
         try {
-            Map in = new HashMap<String, Object>();
-            in.put("ip_simulacion", request.getSimulacion());
+            Map<String, Object> in = new HashMap();
+            in.put("ip_simulacion", BigDecimal.valueOf(0));
 
-            Map out = this.execute(in);
+            Map<String, Object> out = this.execute(in);
 
             Op_Resultado = (BigDecimal) out.get("Op_Resultado");
             Op_MSG = out.get("Op_MSG").toString();
@@ -48,7 +47,7 @@ public class ParametrizarSiniestrosService extends StoredProcedure implements Pa
 
         }catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
 
         }
         return response;

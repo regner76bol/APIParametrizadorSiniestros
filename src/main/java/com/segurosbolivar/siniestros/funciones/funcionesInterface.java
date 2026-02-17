@@ -1,8 +1,10 @@
 package com.segurosbolivar.siniestros.funciones;
 
+import com.segurosbolivar.siniestros.commons.ResponseBase;
 import com.segurosbolivar.siniestros.parametrizador.causas.entity.DAO.CausasRequest;
 import com.segurosbolivar.siniestros.parametrizador.consecuecias.entity.DAO.ConsecuenciasRequest;
-import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.entity.DAO.ReservaAutomaticaRequest;
+
+import java.io.IOException;
 
 public interface funcionesInterface {
 
@@ -24,4 +26,8 @@ public interface funcionesInterface {
 
     Integer Fn_BuscarCodigoCausa(CausasRequest request);
     Integer fn_BuscarCodigoConsecuencia(ConsecuenciasRequest request);
+
+    String CrearArchivoCTL(String nombArch, String tipoArchivo) throws IOException;
+
+    ResponseBase EjecuarSqlloader(String ctl, String data) throws IOException;
 }
