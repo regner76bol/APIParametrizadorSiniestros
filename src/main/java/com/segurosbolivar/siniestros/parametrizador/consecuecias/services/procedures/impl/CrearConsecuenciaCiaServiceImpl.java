@@ -1,6 +1,5 @@
 package com.segurosbolivar.siniestros.parametrizador.consecuecias.services.procedures.impl;
 
-import com.segurosbolivar.siniestros.parametrizador.causas.service.procedures.Impl.CrearCausasCiaServiceImpl;
 import com.segurosbolivar.siniestros.parametrizador.consecuecias.entity.DAO.ConsecuenciasRequest;
 import com.segurosbolivar.siniestros.parametrizador.consecuecias.entity.DTO.ConsecuenciasResponse;
 import com.segurosbolivar.siniestros.parametrizador.consecuecias.services.procedures.CrearConsecuenciaCiaServiceInterface;
@@ -35,26 +34,24 @@ DataSource dataSource;
 
   public ConsecuenciasResponse execute(ConsecuenciasRequest request){
 
-      Map in = new HashMap<String,Object>();
+      Map<String,Object> in = new HashMap<>();
       ConsecuenciasResponse response = new ConsecuenciasResponse();
 
       try {
-
-
           in.put("ip_cod_cia", request.getCodCia());
           in.put("ip_cod_cons", request.getCodCons());
           in.put("ip_consecuencia", request.getConsecuencia());
           in.put("ip_idparammae", request.getIdParamMae());
           in.put("ip_simulacion", request.getSimulacion());
 
-          Map out = this.execute(in);
+          Map<String,Object> out = this.execute(in);
 
           response.setOp_Resultado((BigDecimal) out.get("Op_Resultado"));
           response.setOp_MSG(out.get("Op_MSG").toString());
 
       } catch (Exception e) {
           response.setOp_Resultado(BigDecimal.valueOf(-1));
-          response.setOp_MSG(e.getCause().getMessage());
+          response.setOp_MSG(e.getMessage());
       }
       return response;
   }

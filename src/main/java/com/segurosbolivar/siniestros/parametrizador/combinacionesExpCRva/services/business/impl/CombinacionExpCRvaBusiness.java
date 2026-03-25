@@ -5,7 +5,6 @@ import com.segurosbolivar.siniestros.parametrizador.combinacionesExpCRva.entity.
 import com.segurosbolivar.siniestros.parametrizador.combinacionesExpCRva.entity.DTO.CombinacionExpCRvaResponse;
 import com.segurosbolivar.siniestros.parametrizador.combinacionesExpCRva.services.business.CombinacionExpCRvaBusinessInterface;
 import com.segurosbolivar.siniestros.parametrizador.combinacionesExpCRva.services.procedures.CombinacionExpCrvaServiceInterface;
-import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.entity.DAO.ReservaAutomaticaRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ public class CombinacionExpCRvaBusiness implements CombinacionExpCRvaBusinessInt
     CombinacionExpCrvaServiceInterface ICombinacion;
 
     public CombinacionExpCRvaResponse CombinacionExpCRva(CombinacionExpCRvaRequest request){
-        CombinacionExpCRvaResponse comb = new CombinacionExpCRvaResponse();
+        CombinacionExpCRvaResponse comb;
         CombinacionExpCRvaResponse response = new CombinacionExpCRvaResponse();
 
         Integer ExComb = Ifunciones.Fn_ExisteCombExpCRva(request.getCodCia().toString(),request.getCodCob().toString(),request.getCodCausa().toString(),request.getTipoExped(),request.getCodConcepRva().toString());
@@ -63,7 +62,6 @@ public class CombinacionExpCRvaBusiness implements CombinacionExpCRvaBusinessInt
             response.setOp_Resultado(BigDecimal.valueOf(-1));
             response.setOp_MSG("No existe la combinacion expediente- concepto rva");
         }
-
        return response;
     }
 }

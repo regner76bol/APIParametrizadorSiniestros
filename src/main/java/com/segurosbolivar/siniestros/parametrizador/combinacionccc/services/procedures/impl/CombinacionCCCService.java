@@ -3,7 +3,6 @@ package com.segurosbolivar.siniestros.parametrizador.combinacionccc.services.pro
 import com.segurosbolivar.siniestros.parametrizador.combinacionccc.entity.DAO.CombinacionesRequestDAO;
 import com.segurosbolivar.siniestros.parametrizador.combinacionccc.entity.DTO.CombinacionCCCResponseDTO;
 import com.segurosbolivar.siniestros.parametrizador.combinacionccc.services.procedures.CombinacionCCCServiceInterface;
-import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.entity.DAO.ReservaAutomaticaRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
@@ -42,7 +41,7 @@ public class CombinacionCCCService extends StoredProcedure implements Combinacio
         BigDecimal OpResultado;
         String OpMSG;
         try {
-            Map in = new HashMap<String,Object>();
+            Map<String,Object> in = new HashMap<>();
             in.put("ip_cod_cia",request.getCodCia());
             in.put("ip_cod_secc",request.getCodSecc());
             in.put("ip_cod_producto",request.getCodProd());
@@ -52,7 +51,7 @@ public class CombinacionCCCService extends StoredProcedure implements Combinacio
             in.put("ip_idparammae",request.getIdParamMae());
             in.put("ip_simulacion",request.getSimulacion());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             OpResultado = (BigDecimal)out.get("Op_Resultado");
             OpMSG= out.get("Op_MSG").toString();
@@ -62,11 +61,8 @@ public class CombinacionCCCService extends StoredProcedure implements Combinacio
 
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
-
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }
-
-
 }

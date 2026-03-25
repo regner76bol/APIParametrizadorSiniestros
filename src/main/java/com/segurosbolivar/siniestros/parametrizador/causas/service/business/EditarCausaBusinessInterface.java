@@ -4,5 +4,5 @@ import com.segurosbolivar.siniestros.parametrizador.causas.entity.DAO.CausasRequ
 import com.segurosbolivar.siniestros.parametrizador.causas.entity.DTO.CausasResponse;
 
 public interface EditarCausaBusinessInterface {
-    public CausasResponse EditarCausa(CausasRequest request);
+    CausasResponse EditarCausa(CausasRequest request);
 }

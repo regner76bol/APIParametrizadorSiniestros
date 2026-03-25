@@ -43,14 +43,13 @@ public class EditarCombinacionCCCServiceImpl extends StoredProcedure implements 
             in.put("ip_cod_cons", request.getCodConsecuencia());
             in.put("ip_id_a7000100", request.getIdA7000100());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             OpResultado= (BigDecimal) out.get("Op_Resultado");
             OpMSG= out.get("Op_MSG").toString();
 
             response.setOp_Resultado(OpResultado);
             response.setOp_MSG(OpMSG);
-
         }
         catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
@@ -58,5 +57,4 @@ public class EditarCombinacionCCCServiceImpl extends StoredProcedure implements 
         }
         return response;
     }
-
 }

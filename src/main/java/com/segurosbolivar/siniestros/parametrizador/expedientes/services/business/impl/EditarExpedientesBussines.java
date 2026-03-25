@@ -1,7 +1,5 @@
 package com.segurosbolivar.siniestros.parametrizador.expedientes.services.business.impl;
 
-import com.segurosbolivar.siniestros.parametrizador.consecuecias.services.procedures.EditarConsecuenciaCiaServiceInterface;
-import com.segurosbolivar.siniestros.parametrizador.consecuecias.services.procedures.EditarConsecuenciasProdServiceInterface;
 import com.segurosbolivar.siniestros.parametrizador.expedientes.entity.DAO.ExpedientesRequest;
 import com.segurosbolivar.siniestros.parametrizador.expedientes.entity.DTO.ExpedientesResponse;
 import com.segurosbolivar.siniestros.parametrizador.expedientes.services.business.EditarExpedientesBussinesInterface;
@@ -23,7 +21,7 @@ public class EditarExpedientesBussines implements EditarExpedientesBussinesInter
     @Override
     public ExpedientesResponse EditarExpedientes(ExpedientesRequest request){
 
-        ExpedientesResponse response = new ExpedientesResponse();
+        ExpedientesResponse response;
         response = ExpedCiaInterface.EditarExpedCia(request);
         if (response.getOp_Resultado().equals(BigDecimal.valueOf(0))){
             response = ExpedProdInterface.EditarExpedProd(request);

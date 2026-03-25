@@ -2,8 +2,10 @@ package com.segurosbolivar.siniestros.parametrizador.combinacionesExpCRva.entity
 
 import com.segurosbolivar.siniestros.commons.RequestBase;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 public class CombinacionExpCRvaRequest extends RequestBase {

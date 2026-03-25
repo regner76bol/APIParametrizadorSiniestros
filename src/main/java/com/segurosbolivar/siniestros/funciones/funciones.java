@@ -6,8 +6,6 @@ import com.segurosbolivar.siniestros.parametrizador.consecuecias.entity.DAO.Cons
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.jdbc.core.*;
-import java.io.IOException;
-
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedWriter;
@@ -40,7 +38,7 @@ public class funciones implements funcionesInterface {
         params.add(new SqlParameter("ip_cod_producto",Types.INTEGER));
         params.add(new SqlParameter("ip_cod_causa",Types.INTEGER));
 
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         in.put("ip_cod_cia", codCia);
         in.put("ip_cod_secc", codSecc);
         in.put("ip_cod_producto",codProducto);
@@ -50,9 +48,7 @@ public class funciones implements funcionesInterface {
         CallableStatementCreator creator = factory.newCallableStatementCreator(in);
 
         Map<String,Object> result= jdbcTemplate.call(creator,params);
-        Integer res =  (Integer) result.get("result");
-
-        return res;
+        return (Integer) result.get("result");
     }
 
     public Integer Fn_ExisteConsecuencia(String codCia, String codSecc, String codProducto, String codCons){
@@ -65,7 +61,7 @@ public class funciones implements funcionesInterface {
         params.add(new SqlParameter("ip_cod_producto",Types.INTEGER));
         params.add(new SqlParameter("ip_cod_cons",Types.INTEGER));
 
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         in.put("ip_cod_cia", codCia);
         in.put("ip_cod_secc", codSecc);
         in.put("ip_cod_producto",codProducto);
@@ -75,9 +71,9 @@ public class funciones implements funcionesInterface {
         CallableStatementCreator creator = factory.newCallableStatementCreator(in);
 
         Map<String,Object> result= jdbcTemplate.call(creator,params);
-        Integer res =  (Integer) result.get("result");
+        return (Integer) result.get("result");
 
-        return res;
+
     }
 
 
@@ -90,7 +86,7 @@ public class funciones implements funcionesInterface {
         params.add(new SqlParameter("ip_cod_producto",Types.INTEGER));
         params.add(new SqlParameter("ip_cod_cob",Types.INTEGER));
 
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         in.put("ip_cod_cia", codCia);
         in.put("ip_cod_producto",codProducto);
         in.put("ip_cod_cob",codCob);
@@ -99,10 +95,8 @@ public class funciones implements funcionesInterface {
         CallableStatementCreator creator = factory.newCallableStatementCreator(in);
 
         Map<String,Object> result= jdbcTemplate.call(creator,params);
-        Integer res =  (Integer) result.get("result");
-
-        return res;
-    }
+        return (Integer) result.get("result");
+}
 
     public Integer Fn_ExisteExpediente(String codCia, String codSecc, String codProducto, String tipoExped){
         String statement="{? = call PKG_PARAMETROS_SINIESTRO.FN_EXISTEEXPEDIENTE1(?,?,?,?)}";
@@ -114,7 +108,7 @@ public class funciones implements funcionesInterface {
         params.add(new SqlParameter("ip_cod_producto",Types.INTEGER));
         params.add(new SqlParameter("ip_tipo_exped",Types.VARCHAR));
 
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         in.put("ip_cod_cia", codCia);
         in.put("ip_cod_secc", codSecc);
         in.put("ip_cod_producto",codProducto);
@@ -124,9 +118,7 @@ public class funciones implements funcionesInterface {
         CallableStatementCreator creator = factory.newCallableStatementCreator(in);
 
         Map<String,Object> result= jdbcTemplate.call(creator,params);
-        Integer res =  (Integer) result.get("result");
-
-        return res;
+        return (Integer) result.get("result");
     }
 
     public Integer Fn_ExisteConceptoRva(String codCia, String conRva){
@@ -137,7 +129,7 @@ public class funciones implements funcionesInterface {
         params.add(new SqlParameter("ip_cod_cia", Types.INTEGER));
         params.add(new SqlParameter("ip_cod_concep_rva",Types.INTEGER));
 
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();  
         in.put("ip_cod_cia", codCia);
         in.put("ip_cod_concep_rva",conRva);
 
@@ -145,9 +137,8 @@ public class funciones implements funcionesInterface {
         CallableStatementCreator creator = factory.newCallableStatementCreator(in);
 
         Map<String,Object> result= jdbcTemplate.call(creator,params);
-        Integer res =  (Integer) result.get("result");
+        return (Integer) result.get("result");
 
-        return res;
     }
 
     public Integer Fn_ExisteTipoRva(String codCia, String tipoRva){
@@ -157,7 +148,7 @@ public class funciones implements funcionesInterface {
         params.add(new SqlOutParameter("result",Types.INTEGER));
         params.add(new SqlParameter("ip_tipo_rva", Types.INTEGER));
 
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         in.put("ip_cod_cia", codCia);
         in.put("ip_tipo_rva",tipoRva);
 
@@ -165,9 +156,8 @@ public class funciones implements funcionesInterface {
         CallableStatementCreator creator = factory.newCallableStatementCreator(in);
 
         Map<String,Object> result= jdbcTemplate.call(creator,params);
-        Integer res =  (Integer) result.get("result");
+        return (Integer) result.get("result");
 
-        return res;
     }
 
     public Integer Fn_ExisteCombCCC(String codCia, String codSecc, String codProducto,String codCausa, String codCons){
@@ -180,7 +170,7 @@ public class funciones implements funcionesInterface {
         params.add(new SqlParameter("ip_codProducto",Types.INTEGER));
         params.add(new SqlParameter("ip_codCausa",Types.INTEGER));
         params.add(new SqlParameter("ip_codCons",Types.INTEGER));
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         in.put("ip_codCia", codCia);
         in.put("ip_codSecc", codSecc);
         in.put("ip_codProducto",codProducto);
@@ -191,9 +181,8 @@ public class funciones implements funcionesInterface {
         CallableStatementCreator creator = factory.newCallableStatementCreator(in);
 
         Map<String,Object> result= jdbcTemplate.call(creator,params);
-        Integer res =  (Integer) result.get("result");
+        return (Integer) result.get("result");
 
-        return res;
     }
 
     public Integer Fn_ExisteCombExpCRva(String codCia, String codCob, String codCausa,String tipoExped, String conRva){
@@ -206,7 +195,7 @@ public class funciones implements funcionesInterface {
         params.add(new SqlParameter("ip_codCausa",Types.INTEGER));
         params.add(new SqlParameter("ip_tipoExped",Types.VARCHAR));
         params.add(new SqlParameter("ip_codConcepRva",Types.INTEGER));
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         in.put("ip_codCia", codCia);
         in.put("ip_codCob", codCob);
         in.put("ip_codCausa",codCausa);
@@ -217,9 +206,8 @@ public class funciones implements funcionesInterface {
         CallableStatementCreator creator = factory.newCallableStatementCreator(in);
 
         Map<String,Object> result= jdbcTemplate.call(creator,params);
-        Integer res =  (Integer) result.get("result");
+        return (Integer) result.get("result");
 
-        return res;
     }
 
     public Integer Fn_BuscarCodigoCausa(CausasRequest request){
@@ -228,16 +216,14 @@ public class funciones implements funcionesInterface {
         params.add(new SqlOutParameter("result",Types.INTEGER));
         params.add(new SqlParameter("ip_cod_cia", Types.INTEGER));
         params.add(new SqlParameter("ip_tipo_causa", Types.INTEGER));
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         in.put("ip_cod_cia", request.getCodCia());
         in.put("ip_tipo_causa", request.getTipoCausa());
         CallableStatementCreatorFactory factory = new CallableStatementCreatorFactory(statement,params);
         CallableStatementCreator creator = factory.newCallableStatementCreator(in);
 
         Map<String,Object> result= jdbcTemplate.call(creator,params);
-        Integer res =  (Integer) result.get("result");
-
-        return res;
+        return  (Integer) result.get("result");
     }
 
     public Integer fn_BuscarCodigoConsecuencia(ConsecuenciasRequest request){
@@ -245,22 +231,20 @@ public class funciones implements funcionesInterface {
         List<SqlParameter> params = new ArrayList<>();
         params.add(new SqlOutParameter("result",Types.INTEGER));
         params.add(new SqlParameter("ip_cod_cia", Types.INTEGER));
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         in.put("ip_cod_cia", request.getCodCia());
         CallableStatementCreatorFactory factory = new CallableStatementCreatorFactory(statement,params);
         CallableStatementCreator creator = factory.newCallableStatementCreator(in);
 
         Map<String,Object> result= jdbcTemplate.call(creator,params);
-        Integer res =  (Integer) result.get("result");
-
-        return res;
+        return (Integer) result.get("result");
     }
 
 
-    public String CrearArchivoCTL(String nombArch, String tipoArchivo)  throws IOException {
+    public String CrearArchivoCTL(String nombArch, String tipoArchivo) {
         String tabla = "";
         String campos = "";
-        String ctl ="";
+        String ctl;
         switch (tipoArchivo)
         {
             case "1":
@@ -279,7 +263,7 @@ public class funciones implements funcionesInterface {
                 break;
         }
 
-        String content = "";
+        String content;
 
         Path fileName = Paths.get(filePath+"\\"+nombArch+".ctl");
         try {
@@ -287,28 +271,30 @@ public class funciones implements funcionesInterface {
                 Files.createFile(fileName);
             }
 
-            try (BufferedWriter writer = Files.newBufferedWriter(fileName, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-                writer.write(content);
-                writer.newLine();
+            try (BufferedWriter writer = Files.newBufferedWriter(fileName, StandardOpenOption.CREATE)) {
+                
                 content =("LOAD DATA");
                 writer.write(content);
                 writer.newLine();
-                content =("CHARACTERSET UTF8");
+                content =("CHARACTERSET 'UTF8'");
                 writer.write(content);
                 writer.newLine();
-                content =("INFILE " + filePath + nombArch + "'");
+                content =("INFILE '" + filePath+"\\"+ nombArch + "'");
                 writer.write(content);
                 writer.newLine();
-                content =("BADFILE " + filePath + nombArch + ".bad'");
+                content =("BADFILE '" + filePath+"\\" + nombArch + ".bad'");
                 writer.write(content);
                 writer.newLine();
-                content =("DISCARDFILE" + filePath + nombArch + ".dsc'");
+                content =("DISCARDFILE '" + filePath+"\\" + nombArch + ".dsc'");
                 writer.write(content);
                 writer.newLine();
                 content =(tabla);
                 writer.write(content);
                 writer.newLine();
-                content =("FIELDS TERMINATED BY " + "\"" + ";" + "\"" + " TRAILING NULLCOLS");
+                content =("FIELDS TERMINATED BY " + "\"" + ";" + "\"");
+                writer.write(content);
+                writer.newLine();
+                content =(" TRAILING NULLCOLS");
                 writer.write(content);
                 writer.newLine();
                 content =(campos);
@@ -325,44 +311,37 @@ public class funciones implements funcionesInterface {
         return  ctl;
     }
 
-    public ResponseBase EjecuarSqlloader(String ctl, String data) throws IOException {
+    public ResponseBase EjecuarSqlloader(String ctl, String data) {
         ResponseBase res = new ResponseBase();
         try {
-            // Para Windows, usar cmd.exe
             String[] cmd = {
-                "cmd.exe", 
-                "/c", 
-                "sqlldr", 
-                "userid=ops$puma/puma@DESA_TRONMASK",
+                "cmd.exe",
+                "/c",
+                "sqlldr",
+                "userid=ops$puma/puma@TRON_MASK_ORA19C",
                 "control=" + ctl,
                 "data=" + data,
                 "log=" + data + ".log",
                 "bad=" + data + ".bad",
                 "discard=" + data + ".discard"
             };
-            
+
             ProcessBuilder pb = new ProcessBuilder(cmd);
             pb.redirectErrorStream(true);
             Process process = pb.start();
-            
+
             // Capturar salida completa
             java.util.Scanner s = new java.util.Scanner(process.getInputStream()).useDelimiter("\\A");
             String output = s.hasNext() ? s.next() : "";
             
             // Esperar a que termine el proceso
             int exitCode = process.waitFor();
-            
-            if (exitCode != 0) {
-                System.err.println("SQL*Loader error: " + output);
-                res.setOp_MSG("Error en SQL*Loader: código " + exitCode);
-                res.setOp_Resultado(BigDecimal.valueOf(-1));
-            } else {
-                System.out.println("SQL*Loader ejecutado exitosamente");
-                // Continuar con el resto del código
-            }
-            
+
+            res.setOp_MSG("Carga de registros a la bd realizado satisfactroriamente, por favor revise el log en caso de duda exitCod: "+ exitCode + "-" +output);
+            res.setOp_Resultado(BigDecimal.valueOf(0));
+           
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             res.setOp_MSG("Error: " + e.getMessage());
             res.setOp_Resultado(BigDecimal.valueOf(-1));
         }

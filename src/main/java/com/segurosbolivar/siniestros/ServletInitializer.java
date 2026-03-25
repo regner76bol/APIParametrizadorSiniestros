@@ -6,6 +6,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class ServletInitializer extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
-        return application.sources(SimiestrosApplication.class);
+        return application.sources(SiniestrosApplication.class);
     }
 }

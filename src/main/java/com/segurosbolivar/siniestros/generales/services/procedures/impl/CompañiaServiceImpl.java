@@ -46,7 +46,7 @@ public class CompañiaServiceImpl extends StoredProcedure implements CompañiaSe
         } catch (Exception e) {
 
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

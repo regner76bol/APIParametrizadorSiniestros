@@ -43,25 +43,28 @@ public class ArchivosBussines implements ArchivosBussinesInterface {
         ResponseBase response= new ResponseBase();
 
         //guarda el archivo en ubicacion fisica
-        String path = ICargarArchivos.store(file);
+        ICargarArchivos.store(file);
         String fullNomArch= filePath +"\\" + file.getOriginalFilename();
         //crear registro en la tabla de archivos
-        resBase = IInsertarArchivo.InsertarArchivo(request);
-        if (resBase.getOp_Resultado().equals(BigDecimal.ZERO)){
+        
+        request.setRutaFisica(fullNomArch);
+        
+        responseArch = IInsertarArchivo.InsertarArchivo(request);
+        if (responseArch.getOp_Resultado().equals(BigDecimal.ZERO)){
             //crear archivo de control
             String ctl =  filePath.toString();
-            ctl += IFunciones.CrearArchivoCTL(file.getOriginalFilename(),"1");
+            ctl = ctl +"\\"+IFunciones.CrearArchivoCTL(file.getOriginalFilename(),request.getTipo());
 
             if(!ctl.contains("Error:")){
                 //ejecuar comando sqlloader para cargar la info del archivo en la tabla
-                resBase = null;
+
                 resBase = IFunciones.EjecuarSqlloader(ctl,fullNomArch);
                 if (resBase.getOp_Resultado().equals(BigDecimal.ZERO)){
                     //Insertar registro en la tabla maestra
+                    request.setIdArchivo(responseArch.getIdArchivo());
                     responseArch = IInsertarMaestra.InsertarTablaMaestra(request);
-                    if (response.getOp_Resultado().equals(BigDecimal.ZERO)){
+                    if (responseArch.getOp_Resultado().equals(BigDecimal.ZERO)){
                         //Actualizar Maestra
-                        resBase= null;
                         resBase =IActualizarMAestra.ActualizarMaestra(responseArch.getSecMae());
                         if (resBase.getOp_Resultado().equals(BigDecimal.ZERO)){
                             //Ejecutar procedimiento para crear la parametrizacion
@@ -96,8 +99,8 @@ public class ArchivosBussines implements ArchivosBussinesInterface {
             }
         }
         else {
-            response.setOp_Resultado(resBase.getOp_Resultado());
-            response.setOp_MSG(resBase.getOp_MSG());
+            response.setOp_Resultado(responseArch.getOp_Resultado());
+            response.setOp_MSG(responseArch.getOp_MSG());
         }
       return response;
     }

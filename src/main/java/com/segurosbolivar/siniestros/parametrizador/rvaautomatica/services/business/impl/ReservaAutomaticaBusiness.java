@@ -20,7 +20,7 @@ public class ReservaAutomaticaBusiness implements ReservaAutomaticaBusinessInter
     funcionesInterface Ifunciones;
 
     public ReservaAutomaticaResponse ReservaBusiness(ReservaAutomaticaRequest request){
-        ReservaAutomaticaResponse response =null;
+        ReservaAutomaticaResponse response = new ReservaAutomaticaResponse();
 
         Integer ExCob = Ifunciones.Fn_ExisteCobertura(request.getCodCia().toString(),request.getCodProd().toString(), request.getCodCob().toString());
         if (ExCob==1) {

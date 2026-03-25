@@ -56,10 +56,9 @@ public class CcambioServiceImpl extends StoredProcedure implements CcambioServic
             response.setOp_CurCCambio(Op_CurCCambio);
             response.setOp_Resultado(Op_Resultado);
             response.setOp_MSG(Op_MSG);
-
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

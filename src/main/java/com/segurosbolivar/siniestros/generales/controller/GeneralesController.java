@@ -59,7 +59,7 @@ public class GeneralesController {
         }catch (Exception e){
             GeneralesResponseDTO res = new GeneralesResponseDTO();
             res.setOp_Resultado(BigDecimal.valueOf(-1));
-            res.setOp_MSG(e.getCause().getMessage());
+            res.setOp_MSG(e.getMessage());
             response = new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
@@ -84,7 +84,7 @@ public class GeneralesController {
         }catch (Exception e){
             GeneralesResponseDTO res = new GeneralesResponseDTO();
             res.setOp_Resultado(BigDecimal.valueOf(-1));
-            res.setOp_MSG(e.getCause().getMessage());
+            res.setOp_MSG(e.getMessage());
             response = new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
@@ -108,7 +108,7 @@ public class GeneralesController {
         }catch (Exception e){
             GeneralesResponseDTO res = new GeneralesResponseDTO();
             res.setOp_Resultado(BigDecimal.valueOf(-1));
-            res.setOp_MSG(e.getCause().getMessage());
+            res.setOp_MSG(e.getMessage());
             response = new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;

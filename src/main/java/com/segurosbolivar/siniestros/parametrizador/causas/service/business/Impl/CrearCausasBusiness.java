@@ -9,8 +9,6 @@ import com.segurosbolivar.siniestros.parametrizador.causas.service.procedures.Cr
 import com.segurosbolivar.siniestros.parametrizador.causas.service.procedures.CrearCausasSeccServiceInterface;
 import com.segurosbolivar.siniestros.funciones.funcionesInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -38,19 +36,19 @@ public class CrearCausasBusiness implements CrearCausasBusinessInterface {
         if (response.getOp_CauxCia() == 0) {
             CausasResponse cauCia = ciaInterface.execute(request);
             //Validación y creación de causas por compañía
-            if (cauCia.getOp_Resultado()== BigDecimal.valueOf(0)) {
+            if (cauCia.getOp_Resultado().equals( BigDecimal.valueOf(0))) {
                 response.setOp_Resultado(BigDecimal.valueOf(0));
                 response.setOp_MSG("se ha creado la Causa x compañía");
                 //validacion y creacion de causa por sección
                 if (response.getOp_CauxSecc() == 0) {
                     CausasResponse cauSecc = seccInterface.execute(request);
-                    if (cauSecc.getOp_Resultado()== BigDecimal.valueOf(0)){
+                    if (cauSecc.getOp_Resultado().equals( BigDecimal.valueOf(0))){
                         response.setOp_Resultado(BigDecimal.valueOf(0));
                         response.setOp_MSG("se ha creado la Causa x sección");
                         //validación y creación de causas por producto
                         if (response.getOp_CauxProd()==0) {
                             CausasResponse cauProd = prodInterface.execute(request);
-                            if (cauProd.getOp_Resultado()== BigDecimal.valueOf(0)){
+                            if (cauProd.getOp_Resultado().equals(BigDecimal.valueOf(0))){
                                 response.setOp_Resultado(BigDecimal.valueOf(0));
                                 response.setOp_MSG("se ha creado la Causa x producto");
                             }
@@ -86,8 +84,7 @@ public class CrearCausasBusiness implements CrearCausasBusinessInterface {
 
     @Override
     public Integer BuscarCodigoCausa(CausasRequest request){
-        Integer codCausa = IFunciones.Fn_BuscarCodigoCausa(request);
-        return  codCausa;
+        return IFunciones.Fn_BuscarCodigoCausa(request);
     }
 
 

@@ -34,7 +34,7 @@ public class ExpedientesCiaServiceImpl extends StoredProcedure implements Expedi
 
     @Override
     public ExpedientesResponse execute(ExpedientesRequest request){
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         ExpedientesResponse response = new ExpedientesResponse();
         try {
             in.put("ip_cod_cia",request.getCodCia());
@@ -44,14 +44,14 @@ public class ExpedientesCiaServiceImpl extends StoredProcedure implements Expedi
             in.put("ip_idparammae",request.getIdParamMae());
             in.put("ip_simulacion",request.getSimulacion());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
-            response.setOp_Resultado(BigDecimal.valueOf(0));
-            response.setOp_MSG("Ok");
+            response.setOp_Resultado((BigDecimal) out.get("Op_Resultado"));
+            response.setOp_MSG(out.get("Op_MSG").toString());
 
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

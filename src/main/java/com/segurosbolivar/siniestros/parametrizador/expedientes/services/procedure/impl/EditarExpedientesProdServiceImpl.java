@@ -45,18 +45,17 @@ public class EditarExpedientesProdServiceImpl extends StoredProcedure implements
             in.put("ip_tipo_exped",request.getTipoExped());
             in.put("ip_desc_exped",request.getDescExped());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             OpResultado = (BigDecimal) out.get("Op_Resultado");
             OpMSG = out.get("Op_MSG").toString();
 
             response.setOp_Resultado(OpResultado);
             response.setOp_MSG(OpMSG);
-
         }
         catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

@@ -1,6 +1,5 @@
 package com.segurosbolivar.siniestros.parametrizador.consecuecias.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.segurosbolivar.siniestros.funciones.funcionesInterface;
 import com.segurosbolivar.siniestros.parametrizador.consecuecias.entity.DAO.ConsecuenciasRequest;
 import com.segurosbolivar.siniestros.parametrizador.consecuecias.entity.DTO.ConsecuenciasResponse;
@@ -31,7 +30,7 @@ public class ConsecuenciasController {
     funcionesInterface IFunciones;
 
     @PostMapping("/parametrizador/consecuencias/listar")
-    public ResponseEntity<ListarConsecuenciasResponse> getListarConsecuencias(@RequestBody ConsecuenciasRequest request) throws JsonProcessingException{
+    public ResponseEntity<ListarConsecuenciasResponse> getListarConsecuencias(@RequestBody ConsecuenciasRequest request) {
         ResponseEntity<ListarConsecuenciasResponse> response;
         ListarConsecuenciasResponse lista = ICrearConsBusiness.ListarConsecuencias(request);
         if (lista.getOp_Resultado().equals(BigDecimal.valueOf(0)) ){
@@ -56,14 +55,14 @@ public class ConsecuenciasController {
             response = new ResponseEntity<>(codCons,HttpStatus.OK);
         }
         else {
-            response = new ResponseEntity<Integer>(codCons,HttpStatus.INTERNAL_SERVER_ERROR);
+            response = new ResponseEntity<>(codCons,HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
 
     }
 
     @PostMapping("/parametrizador/consecuencias/crear")
-    public ResponseEntity<ConsecuenciasResponse> postCrearConsecuencia(@RequestBody ConsecuenciasRequest request) throws JsonProcessingException {
+    public ResponseEntity<ConsecuenciasResponse> postCrearConsecuencia(@RequestBody ConsecuenciasRequest request) {
         ResponseEntity<ConsecuenciasResponse> response;
         ConsecuenciasResponse cons = ICrearConsBusiness.CrearConsecuencia(request);
         if (cons.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
@@ -78,7 +77,7 @@ public class ConsecuenciasController {
     }
 
     @PostMapping("/parametrizador/consecuencias/editar")
-    public ResponseEntity<ConsecuenciasResponse>  EditarConsecuencias(@RequestBody ConsecuenciasRequest request) throws JsonProcessingException {
+    public ResponseEntity<ConsecuenciasResponse>  EditarConsecuencias(@RequestBody ConsecuenciasRequest request) {
         ResponseEntity<ConsecuenciasResponse> response;
         ConsecuenciasResponse cons = IEditarBussines.EditarConsecuenciasBussinesService(request);
         if (cons.getOp_Resultado().equals(BigDecimal.valueOf(0))) {

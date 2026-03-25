@@ -30,26 +30,28 @@ public class InsertarArchivoServiceImpl extends StoredProcedure implements Inser
         declareParameter(new SqlParameter("ip_nombreArchivo", Types.VARCHAR));
         declareParameter(new SqlParameter("ip_rutaFisica", Types.VARCHAR));
         declareParameter(new SqlParameter("ip_tipo", Types.NUMERIC));
+        declareParameter(new SqlOutParameter("Op_idArchivo", Types.NUMERIC));
         declareParameter(new SqlOutParameter("Op_Resultado", Types.NUMERIC));
         declareParameter(new SqlOutParameter("Op_MSG", Types.VARCHAR));
     }
 
     @Override
-    public ResponseBase InsertarArchivo(ArchivosRequest request){
+    public ArchivosResponse InsertarArchivo(ArchivosRequest request){
 
-        ResponseBase response = new ResponseBase();
+        ArchivosResponse response = new ArchivosResponse();
 
         try {
             Map<String, Object> in = new HashMap<>();
-            in.put("ip_codCia", request);
-            in.put("ip_codSecc", request);
-            in.put("ip_codProducto", request);
-            in.put("ip_nombreArchivo", request);
-            in.put("ip_rutaFisica", request);
-            in.put("ip_tipo", request);
+            in.put("ip_codCia", request.getCodCia());
+            in.put("ip_codSecc", request.getCodSecc());
+            in.put("ip_codProducto", request.getCodProd());
+            in.put("ip_nombreArchivo", request.getNombreArchivo());
+            in.put("ip_rutaFisica", request.getRutaFisica());
+            in.put("ip_tipo", request.getTipo());
 
             Map<String, Object> out = this.execute(in);
 
+            response.setIdArchivo((BigDecimal) out.get("Op_idArchivo"));
             response.setOp_Resultado((BigDecimal) out.get("Op_Resultado"));
             response.setOp_MSG(out.get("Op_MSG").toString());
 

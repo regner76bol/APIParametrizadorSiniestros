@@ -22,13 +22,13 @@ public class BorrarCausaBusiness implements BorrarCausaBusinessInterface {
 
     @Override
     public CausasResponse BorrarCausa(CausasRequest request){
-        CausasResponse response = null;
+        CausasResponse response;
         response= borrarCiaInterface.BorrarCausaCia(request);
-        if(response.getOp_Resultado()== BigDecimal.valueOf(0)){
+        if(response.getOp_Resultado().equals(BigDecimal.valueOf(0))){
             response=borrarSeccInterface.BorrarCausaSecc(request);
-            if(response.getOp_Resultado()== BigDecimal.valueOf(0)) {
+            if(response.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
                 response=borrarProdInterface.BorrarCausaProd(request);
-                if(response.getOp_Resultado()== BigDecimal.valueOf(0)){
+                if(response.getOp_Resultado().equals(BigDecimal.valueOf(0))){
                     response.setOp_Resultado(BigDecimal.valueOf(0));
                     response.setOp_MSG("se ha borrado la causa");
                 }

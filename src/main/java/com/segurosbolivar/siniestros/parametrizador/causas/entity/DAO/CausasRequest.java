@@ -2,9 +2,11 @@ package com.segurosbolivar.siniestros.parametrizador.causas.entity.DAO;
 
 import com.segurosbolivar.siniestros.commons.RequestBase;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 public class CausasRequest extends RequestBase {

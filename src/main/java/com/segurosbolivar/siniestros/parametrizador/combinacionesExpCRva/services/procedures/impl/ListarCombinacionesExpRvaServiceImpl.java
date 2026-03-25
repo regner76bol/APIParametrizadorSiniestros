@@ -44,7 +44,7 @@ public class ListarCombinacionesExpRvaServiceImpl extends StoredProcedure implem
             in.put("ip_codCob", request.getCodCob());
             in.put("ip_codCausa", request.getCodCausa());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             opcurCombEXRV = out.get("op_curCombEXRV");
             OpResultado= (BigDecimal) out.get("Op_Resultado");

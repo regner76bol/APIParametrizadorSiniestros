@@ -2,7 +2,7 @@ package com.segurosbolivar.siniestros.parametrizador.relexprecupero.service.proc
 
 import com.segurosbolivar.siniestros.parametrizador.relexprecupero.entity.DAO.RelExpRecuperoRequest;
 import com.segurosbolivar.siniestros.parametrizador.relexprecupero.entity.DTO.RelExpRecuperoResponse;
-import com.segurosbolivar.siniestros.parametrizador.relexprecupero.service.procedure.CrearRelExpRecaudoServiceInterface;
+import com.segurosbolivar.siniestros.parametrizador.relexprecupero.service.procedure.EditarRelExpRecaudoServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
@@ -16,19 +16,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class CrearRelExpRecaudoServiceImpl extends StoredProcedure implements CrearRelExpRecaudoServiceInterface {
+public class EditarRelExpRecaudoServiceImpl extends StoredProcedure implements EditarRelExpRecaudoServiceInterface {
 
     @Autowired
     DataSource dataSource;
 
-    public CrearRelExpRecaudoServiceImpl(DataSource dataSource) {
-        super(dataSource, "PKG_PARAMETROS_SINIESTRO.CREAR_REL_EXPXRECUPERO");
+    public EditarRelExpRecaudoServiceImpl(DataSource dataSource) {
+        super(dataSource, "PKG_PARAMETROS_SINIESTRO.EDITAR_REL_EXPXRECUPERO");
         declareParameter(new SqlParameter("ip_cod_cia", Types.INTEGER));
         declareParameter(new SqlParameter("ip_cod_secc", Types.INTEGER));
         declareParameter(new SqlParameter("ip_cod_producto", Types.INTEGER));
         declareParameter(new SqlParameter("ip_tipo_exped", Types.VARCHAR));
         declareParameter(new SqlParameter("ip_tipo_exp_relac", Types.VARCHAR));
         declareParameter(new SqlParameter("ip_mca_relac", Types.VARCHAR));
+        declareParameter(new SqlParameter("ip_tipo_exped_old", Types.VARCHAR));
+        declareParameter(new SqlParameter("ip_tipo_exp_relac_old", Types.VARCHAR));
         declareParameter(new SqlParameter("ip_idparammae", Types.INTEGER));
         declareParameter(new SqlOutParameter("Op_Resultado", Types.NUMERIC));
         declareParameter(new SqlOutParameter("Op_MSG", Types.VARCHAR));
@@ -48,7 +50,9 @@ public class CrearRelExpRecaudoServiceImpl extends StoredProcedure implements Cr
             in.put("ip_tipo_exped", request.getTipoExped());
             in.put("ip_tipo_exp_relac", request.getTipoExpRelac());
             in.put("ip_mca_relac", request.getMcaRelac());
-            in.put("ip_idparammae",request.getIdParamMae());
+            in.put("ip_tipo_exped_old", request.getTipoExpedOld());
+            in.put("ip_tipo_exp_relac_old", request.getTipoExpRelacOld());
+            in.put("ip_idparammae", request.getIdParamMae());
 
             Map<String, Object> out = this.execute(in);
 

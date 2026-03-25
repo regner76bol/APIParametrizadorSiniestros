@@ -45,7 +45,7 @@ public class ListarArchivosServiceImpl extends StoredProcedure implements Listar
       }
       catch (Exception e){
           lista.setOp_Resultado(BigDecimal.valueOf(-1));
-          lista.setOp_MSG(e.getCause().getMessage());
+          lista.setOp_MSG(e.getMessage());
       }
       return lista;
     }

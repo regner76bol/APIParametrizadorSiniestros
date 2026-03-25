@@ -1,13 +1,10 @@
 package com.segurosbolivar.siniestros.parametrizador.combinacionesExpCRva.controller;
 
-import com.segurosbolivar.siniestros.parametrizador.combinacionccc.services.business.impl.CombinacionCCCBusiness;
-import com.segurosbolivar.siniestros.parametrizador.combinacionccc.services.business.impl.CombinacionCCCBusinessInterface;
 import com.segurosbolivar.siniestros.parametrizador.combinacionesExpCRva.entity.DAO.CombinacionExpCRvaRequest;
 import com.segurosbolivar.siniestros.parametrizador.combinacionesExpCRva.entity.DTO.CombinacionExpCRvaResponse;
 import com.segurosbolivar.siniestros.parametrizador.combinacionesExpCRva.services.business.impl.CombinacionExpCRvaBusiness;
 import com.segurosbolivar.siniestros.parametrizador.combinacionesExpCRva.services.procedures.EditarCombinacionesExpRvaServiceInterface;
 import com.segurosbolivar.siniestros.parametrizador.combinacionesExpCRva.services.procedures.ListarCombinacionesExpRvaServiceInterface;
-import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.entity.DAO.ReservaAutomaticaRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,11 +40,10 @@ public class CombinacionExpCRvaController {
             else {
                 response = new ResponseEntity<>(comb, HttpStatus.INTERNAL_SERVER_ERROR);
             }
-
         } catch (Exception e) {
             CombinacionExpCRvaResponse res = new CombinacionExpCRvaResponse();
             res.setOp_Resultado(BigDecimal.valueOf(-1));
-            res.setOp_MSG(e.getCause().getMessage());
+            res.setOp_MSG(e.getMessage());
             response = new ResponseEntity<>(res,HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
@@ -73,7 +69,7 @@ public class CombinacionExpCRvaController {
         } catch (Exception e) {
             CombinacionExpCRvaResponse res = new CombinacionExpCRvaResponse();
             res.setOp_Resultado(BigDecimal.valueOf(0));
-            res.setOp_MSG(e.getCause().getMessage());
+            res.setOp_MSG(e.getMessage());
             response = new ResponseEntity<>(res,HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
@@ -98,7 +94,7 @@ public class CombinacionExpCRvaController {
         } catch (Exception e) {
             CombinacionExpCRvaResponse res = new CombinacionExpCRvaResponse();
             res.setOp_Resultado(BigDecimal.valueOf(0));
-            res.setOp_MSG(e.getCause().getMessage());
+            res.setOp_MSG(e.getMessage());
             response = new ResponseEntity<>(res,HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;

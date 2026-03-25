@@ -4,8 +4,8 @@ import com.segurosbolivar.siniestros.funciones.funcionesInterface;
 
 import com.segurosbolivar.siniestros.parametrizador.combinacionccc.entity.DAO.CombinacionesRequestDAO;
 import com.segurosbolivar.siniestros.parametrizador.combinacionccc.entity.DTO.CombinacionCCCResponseDTO;
+import com.segurosbolivar.siniestros.parametrizador.combinacionccc.services.business.CombinacionCCCBusinessInterface;
 import com.segurosbolivar.siniestros.parametrizador.combinacionccc.services.procedures.CombinacionCCCServiceInterface;
-import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.entity.DAO.ReservaAutomaticaRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

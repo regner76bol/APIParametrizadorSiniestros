@@ -46,7 +46,7 @@ public class EditarCombinacionesExpRvaServiceImpl extends StoredProcedure implem
             in.put("ip_codConcepRva",request.getCodConcepRva());
             in.put("ip_idA7000100",request.getIdA7000100());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             OpResultado= (BigDecimal) out.get("Op_Resultado");
             OpMSG= out.get("Op_MSG").toString();

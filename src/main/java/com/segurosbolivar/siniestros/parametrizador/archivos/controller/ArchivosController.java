@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.segurosbolivar.siniestros.funciones.funcionesInterface;
 
 import java.math.BigDecimal;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -41,110 +39,124 @@ public class ArchivosController {
     private CcambioServiceInterface ccambioInterface;
 
     @Autowired
-    private  ListarLogServiceInterface logInterface;
+    private ListarLogServiceInterface logInterface;
 
     @Autowired
     private ArchivosBussinesInterface IArchivosBussines;
 
 
-@GetMapping("/parametrizador/archivos/lista")
-public ResponseEntity<ListarArchivosResponse> getListarArchivos()  {
+    @GetMapping("/parametrizador/archivos/lista")
+    public ResponseEntity<ListarArchivosResponse> getListarArchivos() {
 
-    ResponseEntity<ListarArchivosResponse> response = null;
+        ResponseEntity<ListarArchivosResponse> response = null;
 
-    try {
-        ListarArchivosResponse archivos = archivosInterface.execute();
-        if (archivos.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
-            response = new ResponseEntity<>(archivos, HttpStatus.OK);
-        } else if (archivos.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
-            response = new ResponseEntity<>(archivos, HttpStatus.OK);
-        } else {
-            response = new ResponseEntity<>(archivos, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    } catch (Exception e) {
-        ListarArchivosResponse lista = new ListarArchivosResponse();
-        lista.setOp_Resultado(BigDecimal.valueOf(-1));
-        lista.setOp_MSG(e.getCause().getMessage());
-    }
-
-    return response;
-}
-
-@PostMapping(value = "/parametrizador/archivos/ccambio")
-public ResponseEntity<CcambioResponse> ListarCCambio(@RequestBody CcambioRequest request) {
- ResponseEntity<CcambioResponse> response;
- CcambioResponse ccambio = ccambioInterface.excecute(request);
-    if (ccambio.getOp_Resultado().equals(BigDecimal.valueOf(0))){
-        response=new ResponseEntity<>(ccambio,HttpStatus.OK);
-    }
-    else if (ccambio.getOp_Resultado().equals(BigDecimal.valueOf(-1))){
-        response=new ResponseEntity<>(ccambio,HttpStatus.OK);
-    }
-    else {
-        response=new ResponseEntity<>(ccambio,HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return response;
-}
-
-@PostMapping("/parametrizador/archivos/log")
-public ResponseEntity<ListarLogResponse> ListarLog(@RequestBody ListarLogRequest request) {
-    ResponseEntity<ListarLogResponse> response;
-    ListarLogResponse log = logInterface.execute(request);
-    try {
-        if (log.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
-            response = new ResponseEntity<>(log,HttpStatus.OK);
-        } else if (log.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
-            response = new ResponseEntity<>(log, HttpStatus.OK);
-        } else {
-            response = new ResponseEntity<>(log, HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            ListarArchivosResponse archivos = archivosInterface.execute();
+            if (archivos.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
+                response = new ResponseEntity<>(archivos, HttpStatus.OK);
+            } else if (archivos.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
+                response = new ResponseEntity<>(archivos, HttpStatus.OK);
+            } else {
+                response = new ResponseEntity<>(archivos, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            ListarArchivosResponse lista = new ListarArchivosResponse();
+            lista.setOp_Resultado(BigDecimal.valueOf(-1));
+            lista.setOp_MSG(e.getMessage());
         }
 
-    } catch (Exception e) {
-        ListarLogResponse res= new ListarLogResponse();
-        res.setOp_Resultado(BigDecimal.valueOf(-1));
-        res.setOp_MSG(e.getCause().getMessage());
-        response = new ResponseEntity<>(res,HttpStatus.INTERNAL_SERVER_ERROR);
+        return response;
     }
-    return response;
-}
+
+    @PostMapping(value = "/parametrizador/archivos/ccambio")
+    public ResponseEntity<CcambioResponse> ListarCCambio(@RequestBody CcambioRequest request) {
+        ResponseEntity<CcambioResponse> response;
+        CcambioResponse ccambio = ccambioInterface.excecute(request);
+        if (ccambio.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
+            response = new ResponseEntity<>(ccambio, HttpStatus.OK);
+        } else if (ccambio.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
+            response = new ResponseEntity<>(ccambio, HttpStatus.OK);
+        } else {
+            response = new ResponseEntity<>(ccambio, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return response;
+    }
+
+    @PostMapping("/parametrizador/archivos/log")
+    public ResponseEntity<ListarLogResponse> ListarLog(@RequestBody ListarLogRequest request) {
+        ResponseEntity<ListarLogResponse> response;
+        ListarLogResponse log = logInterface.execute(request);
+        try {
+            if (log.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
+                response = new ResponseEntity<>(log, HttpStatus.OK);
+            } else if (log.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
+                response = new ResponseEntity<>(log, HttpStatus.OK);
+            } else {
+                response = new ResponseEntity<>(log, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        } catch (Exception e) {
+            ListarLogResponse res = new ListarLogResponse();
+            res.setOp_Resultado(BigDecimal.valueOf(-1));
+            res.setOp_MSG(e.getMessage());
+            response = new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return response;
+    }
 
     @PostMapping(value = "/parametrizador/archivos/cargar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ResponseBase> CargarArchivo(@RequestParam(value = "file", required = false) MultipartFile file,
-                                                      @RequestBody ArchivosRequest request) {
-    ResponseBase res = new ResponseBase();
-    ResponseEntity<ResponseBase> response;
-    System.out.println("hola");
-    try {
-         //Validar que el archivo no sea nulo
-        if (file == null) {
-            res.setOp_MSG("Error: No se recibió ningún archivo. Verifique que el parámetro se llame 'file'");
+    public ResponseEntity<ResponseBase> CargarArchivo(@RequestParam(value = "file", required = false) MultipartFile file
+            , @RequestParam(value = "codCia", required = false) String codCia
+            , @RequestParam(value = "codSecc", required = false) String codSecc
+            , @RequestParam(value = "codProd", required = false) String codProd
+            , @RequestParam(value = "nombreArchivo", required = false) String nombreArchivo
+            //, @RequestParam(value = "rutaFisica", required = false) String rutaFisica
+            , @RequestParam(value = "tipo", required = false) String tipo
+            , @RequestParam(value = "codAgrupacion", required = false) String codAgrupacion
+    ) {
+        ResponseBase res = new ResponseBase();
+        ResponseEntity<ResponseBase> response;
+        System.out.println("hola");
+
+        ArchivosRequest request = new ArchivosRequest();
+        request.setCodCia(codCia);
+        request.setCodSecc(codSecc);
+        request.setCodProd(codProd);
+        request.setNombreArchivo(nombreArchivo);
+        request.setTipo(tipo);
+        request.setCodAgrupacion(codAgrupacion);
+
+
+        try {
+            //Validar que el archivo no sea nulo
+            if (file == null) {
+                res.setOp_MSG("Error: No se recibió ningún archivo. Verifique que el parámetro se llame 'file'");
+                res.setOp_Resultado(BigDecimal.valueOf(-1));
+                return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+            }
+            // Validar que el archivo no esté vacío
+            if (file.isEmpty()) {
+                res.setOp_MSG("Error: El archivo está vacío");
+                res.setOp_Resultado(BigDecimal.valueOf(-1));
+                return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+            }
+
+            // Log para debugging
+            System.out.println("Archivo recibido: " + file.getOriginalFilename());
+            System.out.println("Tamaño: " + file.getSize() + " bytes");
+            System.out.println("Content-Type: " + file.getContentType());
+
+            res = IArchivosBussines.CargarArchivo(filePath, file, request);
+
+            response = new ResponseEntity<>(res, HttpStatus.OK);
+
+        } catch (Exception e) {
+            //e.printStackTrace(); // Para ver el error completo en consola
+            res.setOp_MSG("Error: " + e.getMessage());
             res.setOp_Resultado(BigDecimal.valueOf(-1));
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+            response = new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
-         // Validar que el archivo no esté vacío
-        if (file.isEmpty()) {
-            res.setOp_MSG("Error: El archivo está vacío");
-            res.setOp_Resultado(BigDecimal.valueOf(-1));
-            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
-        }
-        
-        // Log para debugging
-        System.out.println("Archivo recibido: " + file.getOriginalFilename());
-        System.out.println("Tamaño: " + file.getSize() + " bytes");
-        System.out.println("Content-Type: " + file.getContentType());
-
-        res = IArchivosBussines.CargarArchivo(filePath,file,request);
-
-        response = new ResponseEntity<>(res, HttpStatus.OK);
-
+        return response;
     }
-    catch (Exception e){
-        //e.printStackTrace(); // Para ver el error completo en consola
-        res.setOp_MSG("Error: "+ e.getMessage() );
-        res.setOp_Resultado(BigDecimal.valueOf(-1));
-        response = new ResponseEntity<>(res, HttpStatus.INTERNAL_SERVER_ERROR);
-
-    }
-    return response;
-  }
 }

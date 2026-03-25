@@ -39,7 +39,7 @@ public CrearCausasProdServiceImpl(DataSource dataSource){
         BigDecimal Op_Resultado;
         String Op_MSG;
         try {
-            Map in = new HashMap<String,Object>();
+            Map<String,Object> in = new HashMap<>();
             in.put("ip_codCia",request.getCodCia());
             in.put("ip_cod_secc",request.getCodSecc());
             in.put("ip_cod_producto",request.getCodProd());
@@ -47,7 +47,7 @@ public CrearCausasProdServiceImpl(DataSource dataSource){
             in.put("ip_idparammae",0);
             in.put("ip_simulacion",0);
 
-            Map out =this.execute(in);
+            Map<String,Object> out =this.execute(in);
             Op_Resultado = (BigDecimal) out.get("Op_Resultado");
             Op_MSG = out.get("Op_MSG").toString();
 
@@ -56,7 +56,7 @@ public CrearCausasProdServiceImpl(DataSource dataSource){
 
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
 }

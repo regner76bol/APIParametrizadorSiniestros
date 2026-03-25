@@ -17,49 +17,45 @@ import java.util.Map;
 
 @Service
 public class ListarExpedientesServiceImpl extends StoredProcedure implements ListarExpedientesServiceInterface {
-@Autowired
+    @Autowired
     DataSource dataSource;
 
-public ListarExpedientesServiceImpl(DataSource dataSource){
-    super(dataSource,"PKG_PARAMETROS_SINIESTRO.Proc_ListarExpedientes");
-    declareParameter(new SqlParameter("ip_codCia", Types.INTEGER));
-    declareParameter(new SqlParameter("ip_codSecc", Types.INTEGER));
-    declareParameter(new SqlParameter("ip_codProd", Types.INTEGER));
-    declareParameter(new SqlOutParameter("op_curExped", Types.REF_CURSOR));
-    declareParameter(new SqlOutParameter("Op_Resultado", Types.NUMERIC));
-    declareParameter(new SqlOutParameter("Op_MSG", Types.VARCHAR));
-}
-
-@Override
-public ExpedientesResponse ListarExpedientes(ExpedientesRequest request){
-  ExpedientesResponse response = new ExpedientesResponse();
-  BigDecimal OpResultado;
-  String OpMsg;
-  Object OpCurExped;
-    Map<String, Object> in = new HashMap<>();
-    try{
-        in.put("ip_codCia",request.getCodCia());
-        in.put("ip_codSecc",request.getCodSecc());
-        in.put("ip_codProd",request.getCodProd());
-
-        Map out = this.execute(in);
-
-        OpResultado = (BigDecimal) out.get("Op_Resultado");
-        OpMsg = out.get("Op_MSG").toString();
-        OpCurExped = out.get("op_curExped");
-
-        response.setOp_Resultado(OpResultado);
-        response.setOp_MSG(OpMsg);
-        response.setOpcurExped(OpCurExped);
-
+    public ListarExpedientesServiceImpl(DataSource dataSource) {
+        super(dataSource, "PKG_PARAMETROS_SINIESTRO.Proc_ListarExpedientes");
+        declareParameter(new SqlParameter("ip_codCia", Types.INTEGER));
+        declareParameter(new SqlParameter("ip_codSecc", Types.INTEGER));
+        declareParameter(new SqlParameter("ip_codProd", Types.INTEGER));
+        declareParameter(new SqlOutParameter("op_curExped", Types.REF_CURSOR));
+        declareParameter(new SqlOutParameter("Op_Resultado", Types.NUMERIC));
+        declareParameter(new SqlOutParameter("Op_MSG", Types.VARCHAR));
     }
-    catch (Exception e){
-        response.setOp_Resultado(BigDecimal.valueOf(-1));
-        response.setOp_MSG(e.getCause().getMessage());
 
+    @Override
+    public ExpedientesResponse ListarExpedientes(ExpedientesRequest request) {
+        ExpedientesResponse response = new ExpedientesResponse();
+        BigDecimal OpResultado;
+        String OpMsg;
+        Object OpCurExped;
+        Map<String, Object> in = new HashMap<>();
+        try {
+            in.put("ip_codCia", request.getCodCia());
+            in.put("ip_codSecc", request.getCodSecc());
+            in.put("ip_codProd", request.getCodProd());
+
+            Map<String, Object> out = this.execute(in);
+
+            OpResultado = (BigDecimal) out.get("Op_Resultado");
+            OpMsg = out.get("Op_MSG").toString();
+            OpCurExped = out.get("op_curExped");
+
+            response.setOp_Resultado(OpResultado);
+            response.setOp_MSG(OpMsg);
+            response.setOpcurExped(OpCurExped);
+
+        } catch (Exception e) {
+            response.setOp_Resultado(BigDecimal.valueOf(-1));
+            response.setOp_MSG(e.getMessage());
+        }
+        return response;
     }
-  return response;
-
-}
-
 }

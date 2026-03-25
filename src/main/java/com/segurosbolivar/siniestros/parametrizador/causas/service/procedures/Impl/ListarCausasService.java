@@ -36,7 +36,7 @@ public class ListarCausasService extends StoredProcedure implements ListarCausas
 
     @Override
     public ListarCausasResponse ListarCausas(CausasRequest request){
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         ListarCausasResponse response = new ListarCausasResponse();
             BigDecimal OpResultado;
             String OpMSG;
@@ -47,7 +47,7 @@ public class ListarCausasService extends StoredProcedure implements ListarCausas
             in.put("ip_codSecc", request.getCodSecc());
             in.put("ip_codProd", request.getCodProd());
             in.put("ip_tipoCausa",request.getTipoCausa());
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
             OpcurCausas = out.get("op_curCausas");
             OpResultado = (BigDecimal)out.get("Op_Resultado");
             OpMSG = out.get("Op_MSG").toString();
@@ -58,7 +58,7 @@ public class ListarCausasService extends StoredProcedure implements ListarCausas
 
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

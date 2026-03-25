@@ -2,10 +2,12 @@ package com.segurosbolivar.siniestros.parametrizador.expedientes.entity.DTO;
 
 import com.segurosbolivar.siniestros.commons.ResponseBase;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 public class ExpedientesResponse extends ResponseBase {

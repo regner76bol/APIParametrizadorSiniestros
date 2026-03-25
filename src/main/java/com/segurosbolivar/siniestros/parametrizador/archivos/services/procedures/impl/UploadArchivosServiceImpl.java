@@ -22,14 +22,14 @@ public class UploadArchivosServiceImpl implements UploadArchivosServiceInterface
     @Autowired
     DataSource dataSource;
 
-    //@Value("${file.upload.dir}")
-    private String uploadDir= "@Value(${file.upload.dir})";
-
-    private final Path rootLocation;
+    @Value("${file.upload.dir}")
+    private Path uploadDir= Paths.get("${file.upload.dir}");
+    @Value("${file.upload.dir}")
+    private  Path rootLocation;
 
     public UploadArchivosServiceImpl() {
         //String uploadDir = "C:\\Users\\79745463\\Documents\\Archivos\\";
-        this.rootLocation = Paths.get(this.uploadDir);
+        this.rootLocation = Paths.get(this.uploadDir.toString());
         try {
             Files.createDirectories(rootLocation);
         } catch (IOException e) {

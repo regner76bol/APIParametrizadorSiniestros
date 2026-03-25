@@ -39,7 +39,7 @@ public class CombinacionExpCrvaService extends StoredProcedure implements Combin
     public CombinacionExpCRvaResponse execute(CombinacionExpCRvaRequest request){
         CombinacionExpCRvaResponse response = new CombinacionExpCRvaResponse();
         try {
-            Map in = new HashMap<String,Object>();
+            Map<String,Object> in = new HashMap<>();
             in.put("ip_cod_cia",request.getCodCia());
             in.put("ip_cod_producto",request.getCodProd());
             in.put("ip_tipo_exped",request.getTipoExped());
@@ -49,13 +49,13 @@ public class CombinacionExpCrvaService extends StoredProcedure implements Combin
             in.put("ip_idparammae",request.getIdParamMae());
             in.put("ip_simulacion",request.getSimulacion());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             response.setOp_Resultado((BigDecimal) out.get("Op_Resultado"));
             response.setOp_MSG(out.get("Op_MSG").toString());
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

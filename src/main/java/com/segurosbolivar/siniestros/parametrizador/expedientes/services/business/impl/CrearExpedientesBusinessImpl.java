@@ -41,8 +41,6 @@ public class CrearExpedientesBusinessImpl implements ExpedientesBusinessImplInte
             response.setOp_Resultado(BigDecimal.valueOf(-1));
             response.setOp_MSG("El Expediente por Compañía ya existe");
         }
-
-
         return response;
     }
 }

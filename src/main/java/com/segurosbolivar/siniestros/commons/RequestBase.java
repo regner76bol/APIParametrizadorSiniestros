@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestBase {
 
-    public RequestBase(Integer codCia, Integer codSecc,Integer codProd,String codUsr, Integer idParamMae, Integer simulacion){
+    public RequestBase(String codCia, String codSecc,String codProd,String codUsr, String idParamMae, String simulacion){
         this.codCia=codCia;
         this.codSecc=codSecc;
         this.codProd=codProd;
@@ -17,11 +17,11 @@ public class RequestBase {
         this.idParamMae=idParamMae;
         this.simulacion=simulacion;
     }
-    private Integer codCia;
-    private Integer codSecc;
-    private Integer codProd;
+    private String codCia;
+    private String codSecc;
+    private String codProd;
     private String codUsr;
-    private Integer idParamMae;
-    private Integer simulacion;
+    private String idParamMae;
+    private String simulacion;
 }
 

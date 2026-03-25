@@ -33,7 +33,7 @@ public class ListarConsecuenciasService extends StoredProcedure implements Lista
 
     @Override
     public ListarConsecuenciasResponse ListarConsecuencias(ConsecuenciasRequest request) {
-        Map in = new HashMap<String,Object>();
+        Map<String,Object> in = new HashMap<>();
         ListarConsecuenciasResponse response = new ListarConsecuenciasResponse();
         BigDecimal OpResultado;
         String OpMSG;
@@ -44,7 +44,7 @@ public class ListarConsecuenciasService extends StoredProcedure implements Lista
             in.put("ip_codSecc", request.getCodSecc());
             in.put("ip_codProd", request.getCodProd());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
             opCurCons = out.get("op_curCons");
             OpResultado = (BigDecimal) out.get("Op_Resultado");
             OpMSG = out.get("Op_MSG").toString();
@@ -57,7 +57,7 @@ public class ListarConsecuenciasService extends StoredProcedure implements Lista
         }
         catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
 

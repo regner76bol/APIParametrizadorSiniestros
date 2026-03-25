@@ -45,7 +45,7 @@ public class EditarConsecuenciasProdServiceImpl extends StoredProcedure implemen
             in.put("ip_cod_consecuencia", request.getCodCons());
             in.put("ip_id_consecprod", request.getIdConsecProd());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             OpResultado= (BigDecimal) out.get("Op_Resultado");
             OpMSG = out.get("Op_MSG").toString();
@@ -56,7 +56,7 @@ public class EditarConsecuenciasProdServiceImpl extends StoredProcedure implemen
         }
         catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

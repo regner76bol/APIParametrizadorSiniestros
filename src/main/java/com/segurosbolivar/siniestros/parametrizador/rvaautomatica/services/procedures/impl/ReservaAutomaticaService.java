@@ -39,16 +39,13 @@ public class ReservaAutomaticaService extends StoredProcedure implements Reserva
         declareParameter(new SqlParameter("ip_simulacion", Types.INTEGER));
         declareParameter(new SqlOutParameter("Op_Resultado", Types.NUMERIC));
         declareParameter(new SqlOutParameter("Op_MSG", Types.VARCHAR));
-
     }
 
     @Override
     public ReservaAutomaticaResponse execute(ReservaAutomaticaRequest request){
         ReservaAutomaticaResponse response = new ReservaAutomaticaResponse();
-        BigDecimal Op_Resultado;
-        String Op_Msg;
         try {
-            Map in = new HashMap<String,Object>();
+            Map<String,Object> in = new HashMap<>();
             in.put("ip_cod_cia",request.getCodCia());
             in.put("ip_cod_secc",request.getCodSecc());
             in.put("ip_cod_producto",request.getCodProd());
@@ -63,14 +60,13 @@ public class ReservaAutomaticaService extends StoredProcedure implements Reserva
             in.put("ip_idparammae",request.getIdParamMae());
             in.put("ip_simulacion",request.getSimulacion());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             response.setOp_Resultado((BigDecimal)out.get("Op_Resultado"));
             response.setOp_MSG(out.get("Op_MSG").toString());
-
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

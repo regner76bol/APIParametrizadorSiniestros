@@ -38,7 +38,7 @@ public class EditarCausasCiaServiceImpl extends StoredProcedure implements Edita
         BigDecimal Op_Resultado;
         String Op_MSG;
         try{
-            Map in = new HashMap<String,Object>();
+            Map<String,Object> in = new HashMap<>();
             in.put("ip_codCia",request.getCodCia());
             in.put("ip_codCausa",request.getCodCausa());
             in.put("ip_tipoCausaAnt",request.getTipoCausaAnt());
@@ -46,7 +46,7 @@ public class EditarCausasCiaServiceImpl extends StoredProcedure implements Edita
             in.put("ip_descCausa",request.getCausa());
             in.put("ip_codProducto", request.getCodProd());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
             Op_Resultado= (BigDecimal) out.get("Op_Resultado");
             Op_MSG= out.get("Op_MSG").toString();
 
@@ -55,7 +55,7 @@ public class EditarCausasCiaServiceImpl extends StoredProcedure implements Edita
         }
         catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

@@ -1,6 +1,5 @@
 package com.segurosbolivar.siniestros.parametrizador.rvaautomatica.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.entity.DAO.ReservaAutomaticaRequest;
 import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.entity.DTO.ReservaAutomaticaResponse;
 import com.segurosbolivar.siniestros.parametrizador.rvaautomatica.services.business.ReservaAutomaticaBusinessInterface;
@@ -32,7 +31,7 @@ public class RvaAutomaticaController {
 
 
     @PostMapping("/parametrizador/rvaautomatica/listar")
-    public ResponseEntity<ReservaAutomaticaResponse> ListarRvaAutomatica(@RequestBody ReservaAutomaticaRequest request)throws JsonProcessingException {
+    public ResponseEntity<ReservaAutomaticaResponse> ListarRvaAutomatica(@RequestBody ReservaAutomaticaRequest request) {
         ResponseEntity<ReservaAutomaticaResponse> response;
         ReservaAutomaticaResponse rva = new ReservaAutomaticaResponse();
 
@@ -49,14 +48,14 @@ public class RvaAutomaticaController {
 
         } catch (Exception e) {
             rva.setOp_Resultado(BigDecimal.valueOf(-1));
-            rva.setOp_MSG(e.getCause().getMessage());
+            rva.setOp_MSG(e.getMessage());
             response = new ResponseEntity<>(rva,HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
     }
     @PostMapping("/parametrizador/rvaautomatica/crear")
-    public ResponseEntity<ReservaAutomaticaResponse> CrearRvaAutomatica(@RequestBody ReservaAutomaticaRequest request)throws JsonProcessingException {
-       ResponseEntity<ReservaAutomaticaResponse> response= null;
+    public ResponseEntity<ReservaAutomaticaResponse> CrearRvaAutomatica(@RequestBody ReservaAutomaticaRequest request){
+       ResponseEntity<ReservaAutomaticaResponse> response;
         ReservaAutomaticaResponse rva = new ReservaAutomaticaResponse();
 
         try {
@@ -72,7 +71,7 @@ public class RvaAutomaticaController {
 
         } catch (Exception e) {
             rva.setOp_Resultado(BigDecimal.valueOf(-1));
-            rva.setOp_MSG(e.getCause().getMessage());
+            rva.setOp_MSG(e.getMessage());
             response = new ResponseEntity<>(rva,HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
@@ -80,8 +79,8 @@ public class RvaAutomaticaController {
 
 
     @PostMapping("/parametrizador/rvaautomatica/editar")
-    public ResponseEntity<ReservaAutomaticaResponse> EditarRvaAutomatica(@RequestBody ReservaAutomaticaRequest request)throws JsonProcessingException {
-        ResponseEntity<ReservaAutomaticaResponse> response= null;
+    public ResponseEntity<ReservaAutomaticaResponse> EditarRvaAutomatica(@RequestBody ReservaAutomaticaRequest request) {
+        ResponseEntity<ReservaAutomaticaResponse> response;
         ReservaAutomaticaResponse rva = new ReservaAutomaticaResponse();
 
         try {
@@ -97,7 +96,7 @@ public class RvaAutomaticaController {
 
         } catch (Exception e) {
             rva.setOp_Resultado(BigDecimal.valueOf(-1));
-            rva.setOp_MSG(e.getCause().getMessage());
+            rva.setOp_MSG(e.getMessage());
             response = new ResponseEntity<>(rva,HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;

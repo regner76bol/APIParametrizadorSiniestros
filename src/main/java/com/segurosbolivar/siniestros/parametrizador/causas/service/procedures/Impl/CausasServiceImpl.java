@@ -38,48 +38,32 @@ public class CausasServiceImpl extends StoredProcedure implements CausasServiceI
 
     @Autowired
     public CausasResponse execute(CausasRequest request){
-        Integer codCia=0;
-        Integer codSecc=0;
-        Integer codProd=0;
-        Integer codCausa= 0;
-        Integer tipoCausa=0;
-        Integer CauxCia=0;
-        Integer CauxSecc=0;
-        Integer CauxProd=0;
+
         BigDecimal Op_Resultado;
         String Op_MSG;
         CausasResponse causa = new CausasResponse();
         try {
-            codCia=request.getCodCia();
-            codSecc=request.getCodSecc();
-            codProd=request.getCodProd();
-            codCausa=request.getCodCausa();
-            tipoCausa=request.getTipoCausa();
-            Map in = new HashMap<String,Object>();
-            in.put("ip_codCia",codCia);
-            in.put("ip_codSecc",codSecc);
-            in.put("ip_codProd",codProd);
-            in.put("ip_codCausa",codCausa);
-            in.put("ip_tipoCausa",tipoCausa);
-            Map out = this.execute(in);
 
-            CauxCia = (Integer) out.get("Op_CauxCia");
-            CauxSecc = (Integer) out.get("Op_CauxSecc");
-            CauxProd = (Integer) out.get("Op_CauxProd");
+            Map<String,Object> in = new HashMap<>();
+            in.put("ip_codCia",request.getCodCia());
+            in.put("ip_codSecc",request.getCodSecc());
+            in.put("ip_codProd",request.getCodProd());
+            in.put("ip_codCausa",request.getCodCausa());
+            in.put("ip_tipoCausa",request.getTipoCausa());
+
+            Map<String,Object> out = this.execute(in);
+
             Op_Resultado= (BigDecimal) out.get("Op_Resultado");
             Op_MSG=out.get("Op_MSG").toString();
 
-            causa.setOp_CauxCia(CauxCia);
-            causa.setOp_CauxSecc(CauxSecc);
-            causa.setOp_CauxProd(CauxProd);
+            causa.setOp_CauxCia((Integer) out.get("Op_CauxCia"));
+            causa.setOp_CauxSecc((Integer) out.get("Op_CauxSecc"));
+            causa.setOp_CauxProd((Integer) out.get("Op_CauxProd"));
             causa.setOp_Resultado(Op_Resultado);
             causa.setOp_MSG(Op_MSG);
-
-
         } catch (Exception e) {
             causa.setOp_Resultado(BigDecimal.valueOf(-1));
-            causa.setOp_MSG(e.getCause().getMessage());
-
+            causa.setOp_MSG(e.getMessage());
         }
         return causa;
     }

@@ -33,10 +33,10 @@ public class BorrarCausaProdServiceImpl extends StoredProcedure implements Borra
         BigDecimal Op_Resultado;
         String Op_MSG;
         try{
-            Map in = new HashMap<String,Object>();
+            Map<String,Object> in = new HashMap<>();
             in.put("ip_idCausaProd",request.getIdCausaProd());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
             Op_Resultado= (BigDecimal) out.get("Op_Resultado");
             Op_MSG= out.get("Op_MSG").toString();
 
@@ -45,7 +45,7 @@ public class BorrarCausaProdServiceImpl extends StoredProcedure implements Borra
         }
         catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

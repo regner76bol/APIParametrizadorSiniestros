@@ -40,6 +40,7 @@ public class BuscarExpedientesServiceImpl extends StoredProcedure implements Bus
         String OpMsg;
         BigDecimal OpExpCia;
         BigDecimal OpExpProd;
+
         Map<String,Object> in = new HashMap<>();
         try {
             in.put("ip_codCia",request.getCodCia());
@@ -47,7 +48,7 @@ public class BuscarExpedientesServiceImpl extends StoredProcedure implements Bus
             in.put("ip_codProd",request.getCodProd());
             in.put("ip_TipoExped",request.getTipoExped());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
              OpResultado = (BigDecimal) out.get("Op_Resultado");
              OpMsg= out.get("Op_MSG").toString();
@@ -57,10 +58,11 @@ public class BuscarExpedientesServiceImpl extends StoredProcedure implements Bus
              response.setOp_Resultado(OpResultado);
              response.setOp_MSG(OpMsg);
              response.setOp_ExpxCia(OpExpCia);
+             response.setOpcurExped(OpExpProd);
         }
         catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

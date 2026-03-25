@@ -34,24 +34,22 @@ public class BuscarConsecuenciaServiceImpl extends StoredProcedure implements Bu
     }
 
     public ConsecuenciasResponse Execute(ConsecuenciasRequest request){
-        Integer Op_ConsxCia=0;
-        Integer Op_ConsxSecc =0;
-        Integer Op_ConsxProd=0;
+        Integer Op_ConsxCia;
+        Integer Op_ConsxSecc;
+        Integer Op_ConsxProd;
         BigDecimal Op_Resultado;
         String Op_MSG;
 
         ConsecuenciasResponse response = new ConsecuenciasResponse();
 
         try {
-
-
-            Map in = new HashMap<String, Object>();
+            Map<String,Object> in = new HashMap<>();
             in.put("ip_codCia", request.getCodCia());
             in.put("ip_codSecc", request.getCodSecc());
             in.put("ip_codProd", request.getCodProd());
             in.put("ip_codCons", request.getCodCons());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             Op_ConsxCia = (Integer) out.get("Op_ConsxCia");
             Op_ConsxSecc = (Integer) out.get("Op_ConsxSecc");
@@ -67,12 +65,8 @@ public class BuscarConsecuenciaServiceImpl extends StoredProcedure implements Bu
 
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
-
+            response.setOp_MSG(e.getMessage());
         }
-
         return response;
-
-
     }
 }

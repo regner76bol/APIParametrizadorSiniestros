@@ -3,8 +3,10 @@ package com.segurosbolivar.siniestros.parametrizador.consecuecias.entity.DAO;
 import com.segurosbolivar.siniestros.commons.RequestBase;
 import com.segurosbolivar.siniestros.parametrizador.consecuecias.entity.DTO.ConsecuenciasResponse;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 public class ConsecuenciasRequest extends RequestBase {

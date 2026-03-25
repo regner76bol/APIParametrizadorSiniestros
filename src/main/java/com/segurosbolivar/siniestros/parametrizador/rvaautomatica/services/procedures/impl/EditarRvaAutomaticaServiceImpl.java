@@ -53,7 +53,7 @@ public class EditarRvaAutomaticaServiceImpl extends StoredProcedure implements E
             in.put("ip_datoVariable", request);
             in.put("ip_liquidacionAut", request);
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             OpResultado=(BigDecimal) out.get("Op_Resultado");
             OpMSG=out.get("Op_MSG").toString();

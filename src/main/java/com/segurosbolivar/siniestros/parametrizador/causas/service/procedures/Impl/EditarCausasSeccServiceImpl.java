@@ -37,14 +37,13 @@ public class EditarCausasSeccServiceImpl extends StoredProcedure implements Edit
         BigDecimal Op_Resultado;
         String Op_MSG;
         try{
-            Map in = new HashMap<String,Object>();
+            Map<String,Object> in = new HashMap<>();
             in.put("ip_codCia",request.getCodCia());
             in.put("ip_codSecc",request.getCodSecc());
             in.put("ip_tipoCausa",request.getTipoCausa());
-            //in.put("ip_tipoCausaAnt",request.getTipoCausaAnt());
             in.put("ip_codCausa",request.getCodCausa());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
             Op_Resultado= (BigDecimal) out.get("Op_Resultado");
             Op_MSG= out.get("Op_MSG").toString();
 
@@ -53,7 +52,7 @@ public class EditarCausasSeccServiceImpl extends StoredProcedure implements Edit
         }
         catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

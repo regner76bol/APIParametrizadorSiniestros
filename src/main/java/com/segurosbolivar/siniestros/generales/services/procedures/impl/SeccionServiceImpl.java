@@ -51,7 +51,7 @@ public class SeccionServiceImpl extends StoredProcedure implements SeccionServic
         } catch (Exception e) {
 
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

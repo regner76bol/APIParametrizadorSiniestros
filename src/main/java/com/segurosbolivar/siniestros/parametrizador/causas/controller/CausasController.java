@@ -40,32 +40,30 @@ public class CausasController {
 
      @PostMapping("/parametrizador/causas/crear")
     public ResponseEntity<CausasResponse> CrearCausas(@RequestBody CausasRequest request){
-         ResponseEntity<CausasResponse> response= null;
+         ResponseEntity<CausasResponse> response;
          CausasResponse causa = negocio.CrearCausa(request);
-         if (causa.getOp_Resultado()== BigDecimal.valueOf(0)) {
-           response= new ResponseEntity<CausasResponse>(causa, HttpStatus.OK);
-         } else if (causa.getOp_Resultado()== BigDecimal.valueOf(-1)) {
-             response= new ResponseEntity<CausasResponse>(causa, HttpStatus.OK);
+         if (causa.getOp_Resultado().equals(BigDecimal.valueOf(0)) ){
+           response= new ResponseEntity<>(causa, HttpStatus.OK);
+         } else if (causa.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
+             response= new ResponseEntity<>(causa, HttpStatus.OK);
          }
          else {
-             response= new ResponseEntity<CausasResponse>(causa, HttpStatus.INTERNAL_SERVER_ERROR);
-
+             response= new ResponseEntity<>(causa, HttpStatus.INTERNAL_SERVER_ERROR);
          }
-
         return response;
      }
 
      @PostMapping("/parametrizador/causas/editar")
      public ResponseEntity<CausasResponse> postEditarCausa(@RequestBody CausasRequest request) throws JsonProcessingException{
-         ResponseEntity<CausasResponse> response = null;
+         ResponseEntity<CausasResponse> response;
          CausasResponse editar = negocioEditar.EditarCausa(request);
-         if (editar.getOp_Resultado()== BigDecimal.valueOf(0)) {
-             response= new ResponseEntity<CausasResponse>(editar, HttpStatus.OK);
-         } else if (editar.getOp_Resultado()== BigDecimal.valueOf(-1)) {
-             response= new ResponseEntity<CausasResponse>(editar, HttpStatus.OK);
+         if (editar.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
+             response= new ResponseEntity<>(editar, HttpStatus.OK);
+         } else if (editar.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
+             response= new ResponseEntity<>(editar, HttpStatus.OK);
          }
          else {
-             response= new ResponseEntity<CausasResponse>(editar, HttpStatus.INTERNAL_SERVER_ERROR);
+             response= new ResponseEntity<>(editar, HttpStatus.INTERNAL_SERVER_ERROR);
          }
 
          return response;
@@ -73,15 +71,15 @@ public class CausasController {
 
      @PostMapping("/parametrizador/causas/borrar")
      public ResponseEntity<CausasResponse> postBorrarCausa(@RequestBody CausasRequest request) throws JsonProcessingException{
-         ResponseEntity<CausasResponse> response = null;
+         ResponseEntity<CausasResponse> response;
          CausasResponse borrar = negocioBorrar.BorrarCausa(request);
-         if (borrar.getOp_Resultado()== BigDecimal.valueOf(0)) {
-             response= new ResponseEntity<CausasResponse>(borrar, HttpStatus.OK);
-         } else if (borrar.getOp_Resultado()== BigDecimal.valueOf(-1)) {
-             response= new ResponseEntity<CausasResponse>(borrar, HttpStatus.OK);
+         if (borrar.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
+             response= new ResponseEntity<>(borrar, HttpStatus.OK);
+         } else if (borrar.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
+             response= new ResponseEntity<>(borrar, HttpStatus.OK);
          }
          else {
-             response= new ResponseEntity<CausasResponse>(borrar, HttpStatus.INTERNAL_SERVER_ERROR);
+             response= new ResponseEntity<>(borrar, HttpStatus.INTERNAL_SERVER_ERROR);
          }
 
          return response;
@@ -101,7 +99,7 @@ public class CausasController {
 
 
          } catch (Exception e) {
-             String x = e.getCause().getMessage();
+             String x = e.getMessage();
          }
 
          ObjectMapper objectMapper = new ObjectMapper();
@@ -109,15 +107,14 @@ public class CausasController {
 */
          ResponseEntity<ListarCausasResponse> response;
          ListarCausasResponse Listar = IListar.ListarCausas(request);
-         if (Listar.getOp_Resultado()== BigDecimal.valueOf(0)) {
-             response= new ResponseEntity<ListarCausasResponse>(Listar, HttpStatus.OK);
-         } else if (Listar.getOp_Resultado()== BigDecimal.valueOf(-1)) {
-             response= new ResponseEntity<ListarCausasResponse>(Listar, HttpStatus.OK);
+         if (Listar.getOp_Resultado().equals(BigDecimal.valueOf(0))) {
+             response= new ResponseEntity<>(Listar, HttpStatus.OK);
+         } else if (Listar.getOp_Resultado().equals(BigDecimal.valueOf(-1))) {
+             response= new ResponseEntity<>(Listar, HttpStatus.OK);
          }
          else {
-             response= new ResponseEntity<ListarCausasResponse>(Listar, HttpStatus.INTERNAL_SERVER_ERROR);
+             response= new ResponseEntity<>(Listar, HttpStatus.INTERNAL_SERVER_ERROR);
          }
-
          return response;
      }
 
@@ -126,13 +123,13 @@ public class CausasController {
          ResponseEntity<Integer> response;
          Integer codCausa = IFunciones.Fn_BuscarCodigoCausa(request);
          if (codCausa > 0){
-             response = new ResponseEntity<Integer>(codCausa,HttpStatus.OK);
+             response = new ResponseEntity<>(codCausa,HttpStatus.OK);
          }
          else if(codCausa==0) {
-             response = new ResponseEntity<Integer>(codCausa,HttpStatus.OK);
+             response = new ResponseEntity<>(codCausa,HttpStatus.OK);
          }
          else {
-             response = new ResponseEntity<Integer>(codCausa,HttpStatus.INTERNAL_SERVER_ERROR);
+             response = new ResponseEntity<>(codCausa,HttpStatus.INTERNAL_SERVER_ERROR);
          }
          return response;
      }

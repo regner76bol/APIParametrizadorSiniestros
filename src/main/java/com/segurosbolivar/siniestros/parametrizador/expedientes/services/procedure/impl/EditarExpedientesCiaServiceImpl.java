@@ -47,7 +47,7 @@ public class EditarExpedientesCiaServiceImpl extends StoredProcedure implements 
             in.put("ip_desc_exped",request.getDescExped());
             in.put("ip_clase_exped",request.getClaseExped());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             OpResultado = (BigDecimal) out.get("Op_Resultado");
             OpMSG = out.get("Op_MSG").toString();
@@ -58,10 +58,9 @@ public class EditarExpedientesCiaServiceImpl extends StoredProcedure implements 
         }
         catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
-
     }
 
 }

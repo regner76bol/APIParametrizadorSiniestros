@@ -32,7 +32,6 @@ public class ListarReservasServiceImpl extends StoredProcedure implements Listar
         declareParameter(new SqlOutParameter("Op_MSG", Types.VARCHAR));
     }
 
-
     @Override
     public ReservaAutomaticaResponse ListarReservas(ReservaAutomaticaRequest request){
         ReservaAutomaticaResponse response = new ReservaAutomaticaResponse();
@@ -45,7 +44,7 @@ public class ListarReservasServiceImpl extends StoredProcedure implements Listar
             in.put("ip_codSecc",request.getCodSecc());
             in.put("ip_codProd",request.getCodProd());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             OpResultado = (BigDecimal) out.get("Op_Resultado");
             OpMsg = out.get("Op_MSG").toString();
@@ -54,15 +53,12 @@ public class ListarReservasServiceImpl extends StoredProcedure implements Listar
             response.setOp_Resultado(OpResultado);
             response.setOp_MSG(OpMsg);
             response.setOpcurRva(OpCurRva);
-
         }
         catch (Exception e){
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
-
+            response.setOp_MSG(e.getMessage());
         }
         return response;
-
     }
 
 }

@@ -3,8 +3,10 @@ package com.segurosbolivar.siniestros.parametrizador.causas.entity.DTO;
 import com.segurosbolivar.siniestros.commons.ResponseBase;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 public class CausasResponse extends ResponseBase {

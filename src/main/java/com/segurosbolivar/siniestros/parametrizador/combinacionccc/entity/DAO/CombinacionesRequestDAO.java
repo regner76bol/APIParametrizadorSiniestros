@@ -3,10 +3,12 @@ package com.segurosbolivar.siniestros.parametrizador.combinacionccc.entity.DAO;
 import com.segurosbolivar.siniestros.commons.RequestBase;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 public class CombinacionesRequestDAO extends RequestBase {

@@ -50,7 +50,7 @@ public class CargarConceptosRVAServiceImpl extends StoredProcedure implements Ca
             response.setOpcurCRVA(OpcurConRVA);
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }

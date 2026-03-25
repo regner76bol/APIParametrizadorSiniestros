@@ -37,16 +37,16 @@ public class ExpedientesServiceImpl extends StoredProcedure implements Expedient
         ExpedientesResponse response= new ExpedientesResponse();
         BigDecimal Op_ExpxCia;
         BigDecimal Op_ExpxProd;
-        BigDecimal Op_Resultado= BigDecimal.valueOf(0);
-        String Op_MSG= null;
+        BigDecimal Op_Resultado;
+        String Op_MSG;
         try {
-            Map in = new HashMap<String,Object>();
+            Map<String,Object> in = new HashMap<>();
             in.put("ip_codCia",request.getCodCia());
             in.put("ip_codSecc",request.getCodSecc());
             in.put("ip_codProd",request.getCodProd());
             in.put("ip_TipoExped",request.getTipoExped());
 
-            Map out = this.execute(in);
+            Map<String,Object> out = this.execute(in);
 
             Op_ExpxCia = (BigDecimal) out.get("Op_ExpxCia");
             Op_ExpxProd = (BigDecimal) out.get("Op_ExpxProd");
@@ -60,7 +60,7 @@ public class ExpedientesServiceImpl extends StoredProcedure implements Expedient
 
         } catch (Exception e) {
             response.setOp_Resultado(BigDecimal.valueOf(-1));
-            response.setOp_MSG(e.getCause().getMessage());
+            response.setOp_MSG(e.getMessage());
         }
         return response;
     }
